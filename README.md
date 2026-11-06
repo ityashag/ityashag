@@ -2,7 +2,7 @@
 
 Working professional, contributing to open source.
 
-`C++` `JavaScript` `HTML` &nbsp;·&nbsp; 23 public repos &nbsp;·&nbsp; on GitHub since Jan 2022
+`C++` `JavaScript` `HTML` &nbsp;·&nbsp; 24 public repos &nbsp;·&nbsp; on GitHub since Jan 2022
 
 ## Receipts
 
@@ -41,7 +41,7 @@ It merged, then a later merge from another PR accidentally removed it along with
 
 ## Contributions
 
-<img src="assets/contributions.svg" alt="Green contribution graph: 22 contributions in the last year and 186 since 2022." width="100%">
+<img src="assets/contributions.svg" alt="Green contribution graph: 24 contributions in the last year and 188 since 2022." width="100%">
 
 <details>
 <summary>Yearly totals</summary>
@@ -53,7 +53,7 @@ It merged, then a later merge from another PR accidentally removed it along with
 | 2023 | 30 |
 | 2024 | 85 |
 | 2025 | 0 |
-| 2026 | 22 |
+| 2026 | 24 |
 
 </details>
 
