@@ -6,8 +6,10 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 5 pull requests, 1 merged, 4 open, plus 181 and minus 35 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 7 pull requests, 1 merged, 6 open, plus 192 and minus 38 lines." width="100%">
 
+- **AMD Gaia** · [list all nine knowledge categories](https://github.com/amd/gaia/pull/6864) · <sub>open</sub>
+- **AMD Gaia** · [use a fact id that exists in the scenario example](https://github.com/amd/gaia/pull/6863) · <sub>open</sub>
 - **AMD Gaia** · [delete the unused code panel CSS](https://github.com/amd/gaia/pull/6859) · <sub>open</sub>
 - **KanaDojo** · [restore themes removed from community-themes.json](https://github.com/lingdojo/kana-dojo/pull/33693) · <sub>open</sub>
 - **AMD Gaia** · [remove nvm alias step from the Windows tab](https://github.com/amd/gaia/pull/6852) · <sub>open</sub>
@@ -41,7 +43,9 @@ It merged, then a later merge from another PR accidentally removed it along with
 
 ## Contributions
 
-<img src="assets/contributions.svg" alt="Green contribution graph: 24 contributions in the last year and 188 since 2022." width="100%">
+<img src="assets/contributions.svg" alt="Green contribution graph: 26 contributions in the last year and 190 since 2022." width="100%">
+
+<img src="assets/activity.svg" alt="Activity overview for the last year: share of commits, pull requests, issues and code review, and the repositories contributed to." width="100%">
 
 <details>
 <summary>Yearly totals</summary>
@@ -53,7 +57,7 @@ It merged, then a later merge from another PR accidentally removed it along with
 | 2023 | 30 |
 | 2024 | 85 |
 | 2025 | 0 |
-| 2026 | 24 |
+| 2026 | 26 |
 
 </details>
 

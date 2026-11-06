@@ -72,6 +72,12 @@ recent_days = [d for week in recent["weeks"] for d in week["contributionDays"]]
 active_days = sum(d["contributionCount"] > 0 for d in recent_days)
 best_day = max(recent_days, key=lambda d: d["contributionCount"])
 all_time = sum(c["totalContributions"] for c in all_years.values())
+activity_data = gql('''{user(login:"%s"){contributionsCollection{
+  totalCommitContributions totalPullRequestContributions totalPullRequestReviewContributions totalIssueContributions
+  commitContributionsByRepository(maxRepositories:25){repository{nameWithOwner} contributions{totalCount}}
+  pullRequestContributionsByRepository(maxRepositories:25){repository{nameWithOwner} contributions{totalCount}}
+  issueContributionsByRepository(maxRepositories:25){repository{nameWithOwner} contributions{totalCount}}
+  pullRequestReviewContributionsByRepository(maxRepositories:25){repository{nameWithOwner} contributions{totalCount}}}}}''' % LOGIN)["user"]["contributionsCollection"]
 
 
 def esc(s):
@@ -288,6 +294,60 @@ def contributions():
             f'{STYLE}{starfield(w, h, 31, 150)}{"".join(t)}</svg>')
 
 
+def activity():
+    w, h = 1280, 500
+    a = activity_data
+    counts = {"Commits": a["totalCommitContributions"], "Pull requests": a["totalPullRequestContributions"],
+              "Issues": a["totalIssueContributions"], "Code review": a["totalPullRequestReviewContributions"]}
+    total = sum(counts.values())
+    share = {k: round(v * 100 / total) if total else 0 for k, v in counts.items()}
+    per_repo = {}
+    for key in ("commit", "pullRequest", "issue", "pullRequestReview"):
+        for row in a[f"{key}ContributionsByRepository"]:
+            name = row["repository"]["nameWithOwner"]
+            per_repo[name] = per_repo.get(name, 0) + row["contributions"]["totalCount"]
+    # Other people's projects first, as they are the point of this card.
+    ordered = sorted(per_repo.items(), key=lambda kv: (kv[0].startswith(LOGIN + "/"), -kv[1], kv[0]))
+    t = [f'<text x="60" y="72" font-family="{SERIF}" font-size="36" fill="{STAR}">Activity overview</text>',
+         f'<text x="60" y="104" font-family="{SERIF}" font-style="italic" font-size="19" fill="{SOFT}">the last year, by type of contribution</text>']
+    x = 60
+    for org in sorted(dict.fromkeys(p["repository"]["owner"]["login"] for p in oss)):
+        width = 34 + len(org) * 10
+        t.append(f'<rect x="{x}" y="132" width="{width}" height="38" rx="9" fill="#0D1117" stroke="#30363D"/>'
+                 f'<text x="{x + width / 2}" y="157" text-anchor="middle" font-family="{MONO}" font-size="16" fill="{STAR}">@{esc(org)}</text>')
+        x += width + 12
+    t.append(f'<text x="60" y="222" font-family="{MONO}" font-size="15" fill="{SOFT}">Contributed to</text>'
+             f'<text x="620" y="222" text-anchor="end" font-family="{MONO}" font-size="15" fill="{SOFT}">contributions</text>')
+    y = 258
+    for name, count in ordered[:5]:
+        t.append(f'<text x="60" y="{y}" font-family="{MONO}" font-size="18" fill="{STAR}">{esc(name)}</text>'
+                 f'<text x="620" y="{y}" text-anchor="end" font-family="{MONO}" font-size="16" fill="{SOFT}">{count}</text>')
+        y += 34
+    if len(ordered) > 5:
+        t.append(f'<text x="60" y="{y}" font-family="{SERIF}" font-style="italic" font-size="18" fill="{SOFT}">and {len(ordered) - 5} other repositories</text>')
+    t.append(f'<line x1="660" y1="50" x2="660" y2="{h - 40}" stroke="#30363D"/>')
+    cx, cy, reach = 960, 250, 165
+    directions = {"Code review": (0, -1), "Issues": (1, 0), "Pull requests": (0, 1), "Commits": (-1, 0)}
+    top_share = max(share.values()) or 1
+    points = []
+    for kind, (dx, dy) in directions.items():
+        t.append(f'<line x1="{cx}" y1="{cy}" x2="{cx + dx * reach}" y2="{cy + dy * reach}" stroke="{GREENS[3]}" stroke-width="3" stroke-linecap="round"/>')
+        length = max(share[kind] / top_share, .05) * reach
+        points.append((cx + dx * length, cy + dy * length))
+    shape = " ".join(f"{px:.1f},{py:.1f}" for px, py in points)
+    t.append(f'<polygon points="{shape}" fill="{GREENS[3]}" fill-opacity=".45" stroke="{GREENS[3]}" stroke-width="2" stroke-linejoin="round"/>')
+    for px, py in points:
+        t.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="6" fill="{SPACE}" stroke="{GREENS[4]}" stroke-width="3"/>')
+    places = {"Code review": (cx, cy - reach - 42, "middle"), "Issues": (cx + reach + 18, cy - 8, "start"),
+              "Pull requests": (cx, cy + reach + 30, "middle"), "Commits": (cx - reach - 18, cy - 8, "end")}
+    for kind, (px, py, anchor) in places.items():
+        t.append(f'<text x="{px}" y="{py}" text-anchor="{anchor}" font-family="{MONO}" font-size="17" font-weight="600" fill="{STAR}">{share[kind]}%</text>'
+                 f'<text x="{px}" y="{py + 24}" text-anchor="{anchor}" font-family="{MONO}" font-size="15" fill="{SOFT}">{kind}</text>')
+    label = "Activity overview for the last year: " + ", ".join(f"{share[k]}% {k.lower()} ({counts[k]})" for k in counts) + ". Contributed to " + ", ".join(n for n, _ in ordered[:5]) + "."
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="{esc(label)}">'
+            f'{STYLE}{starfield(w, h, 47, 120)}{"".join(t)}</svg>')
+
+
 def readme():
     prs_list = []
     for p in oss:
@@ -348,6 +408,8 @@ It merged, then a later merge from another PR accidentally removed it along with
 
 <img src="assets/contributions.svg" alt="Green contribution graph: {recent['totalContributions']} contributions in the last year and {all_time} since {first_year}." width="100%">
 
+<img src="assets/activity.svg" alt="Activity overview for the last year: share of commits, pull requests, issues and code review, and the repositories contributed to." width="100%">
+
 <details>
 <summary>Yearly totals</summary>
 <br>
@@ -377,6 +439,7 @@ It merged, then a later merge from another PR accidentally removed it along with
 write("cover.svg", cover())
 write("receipt.svg", receipt())
 write("contributions.svg", contributions())
+write("activity.svg", activity())
 (ROOT / "README.md").write_text(readme(), encoding="utf8")
 print(json.dumps(dict(repos=len(repos), original=len(original), external=len(external), ext_merged=ext_merged,
                       oss=len(oss), oss_merged=oss_merged, oss_open=oss_open, added=added, removed=removed,
