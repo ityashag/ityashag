@@ -6,13 +6,13 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 7 pull requests, 1 merged, 6 open, plus 192 and minus 38 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 7 pull requests, 5 merged, 2 open, plus 192 and minus 38 lines." width="100%">
 
-- **AMD Gaia** · [list all nine knowledge categories](https://github.com/amd/gaia/pull/6864) · <sub>open</sub>
-- **AMD Gaia** · [use a fact id that exists in the scenario example](https://github.com/amd/gaia/pull/6863) · <sub>open</sub>
-- **AMD Gaia** · [delete the unused code panel CSS](https://github.com/amd/gaia/pull/6859) · <sub>open</sub>
+- **AMD Gaia** · [list all nine knowledge categories](https://github.com/amd/gaia/pull/6864) · <sub>merged</sub>
+- **AMD Gaia** · [use a fact id that exists in the scenario example](https://github.com/amd/gaia/pull/6863) · <sub>merged</sub>
+- **AMD Gaia** · [delete the unused code panel CSS](https://github.com/amd/gaia/pull/6859) · <sub>merged</sub>
 - **KanaDojo** · [restore themes removed from community-themes.json](https://github.com/lingdojo/kana-dojo/pull/33693) · <sub>open</sub>
-- **AMD Gaia** · [remove nvm alias step from the Windows tab](https://github.com/amd/gaia/pull/6852) · <sub>open</sub>
+- **AMD Gaia** · [remove nvm alias step from the Windows tab](https://github.com/amd/gaia/pull/6852) · <sub>merged</sub>
 - **KanaDojo** · [add new Tsuyu Drizzle theme](https://github.com/lingdojo/kana-dojo/pull/33690) · <sub>merged</sub>
 - **MinIO JS** · [read AccessKeyId in IamAwsProvider credential responses](https://github.com/minio/minio-js/pull/1516) · <sub>open</sub>
 
@@ -43,9 +43,7 @@ It merged, then a later merge from another PR accidentally removed it along with
 
 ## Contributions
 
-<img src="assets/contributions.svg" alt="Green contribution graph: 26 contributions in the last year and 191 since 2022." width="100%">
-
-<img src="assets/activity.svg" alt="Activity overview for the last year: share of commits, pull requests, issues and code review, and the repositories contributed to." width="100%">
+<img src="assets/contributions.svg" alt="Green contribution graph: 31 contributions in the last year and 195 since 2022." width="100%">
 
 <details>
 <summary>Yearly totals</summary>
@@ -57,7 +55,7 @@ It merged, then a later merge from another PR accidentally removed it along with
 | 2023 | 30 |
 | 2024 | 85 |
 | 2025 | 0 |
-| 2026 | 27 |
+| 2026 | 31 |
 
 </details>
 
@@ -72,8 +70,8 @@ It merged, then a later merge from another PR accidentally removed it along with
 
 - [x] First merged PR in a popular open-source project: [KanaDojo #33690](https://github.com/lingdojo/kana-dojo/pull/33690)
 - [x] Spotted a merge that wiped 5 themes from KanaDojo and [opened the fix](https://github.com/lingdojo/kana-dojo/pull/33693)
-- [ ] First merge at [AMD Gaia](https://github.com/amd/gaia)
+- [x] First merge at [AMD Gaia](https://github.com/amd/gaia)
 - [ ] First merge at [MinIO](https://github.com/minio/minio-js)
 - [ ] First merged PR in a project with 10k+ stars
 
-<sub>Numbers from the GitHub API, last updated 6 Nov 2026.</sub>
+<sub>Numbers from the GitHub API, last updated 7 Nov 2026.</sub>
