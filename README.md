@@ -6,9 +6,11 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 8 pull requests, 5 merged, 3 open, plus 411 and minus 61 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 10 pull requests, 7 merged, 3 open, plus 586 and minus 73 lines." width="100%">
 
-- **AMD Gaia** · [cite chat attachments by their own name](https://github.com/amd/gaia/pull/6896) · <sub>open</sub>
+- **AMD Gaia** · [keep the chat-create error until it is dismissed](https://github.com/amd/gaia/pull/6912) · <sub>open</sub>
+- **AMD Gaia** · [recognize cloud models another client discovered](https://github.com/amd/gaia/pull/6907) · <sub>merged</sub>
+- **AMD Gaia** · [cite chat attachments by their own name](https://github.com/amd/gaia/pull/6896) · <sub>merged</sub>
 - **AMD Gaia** · [list all nine knowledge categories](https://github.com/amd/gaia/pull/6864) · <sub>merged</sub>
 - **AMD Gaia** · [use a fact id that exists in the scenario example](https://github.com/amd/gaia/pull/6863) · <sub>merged</sub>
 - **AMD Gaia** · [delete the unused code panel CSS](https://github.com/amd/gaia/pull/6859) · <sub>merged</sub>
