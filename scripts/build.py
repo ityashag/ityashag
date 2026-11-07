@@ -58,22 +58,6 @@ today = now.strftime("%-d %b %Y")
 since = dt.datetime.fromisoformat(user["createdAt"].replace("Z", "+00:00")).strftime("%b %Y")
 
 
-def calendar(start=None, end=None):
-    span = f'(from:"{start}",to:"{end}")' if start else ""
-    data = gql('''{user(login:"%s"){contributionsCollection%s{contributionCalendar{totalContributions
-        weeks{contributionDays{date contributionCount weekday}}}}}}''' % (LOGIN, span))
-    return data["user"]["contributionsCollection"]["contributionCalendar"]
-
-
-recent = calendar()
-first_year = dt.datetime.fromisoformat(user["createdAt"].replace("Z", "+00:00")).year
-all_years = {y: calendar(f"{y}-01-01T00:00:00Z", f"{y}-12-31T23:59:59Z") for y in range(first_year, now.year + 1)}
-recent_days = [d for week in recent["weeks"] for d in week["contributionDays"]]
-active_days = sum(d["contributionCount"] > 0 for d in recent_days)
-best_day = max(recent_days, key=lambda d: d["contributionCount"])
-all_time = sum(c["totalContributions"] for c in all_years.values())
-
-
 def esc(s):
     return html.escape(str(s), quote=True)
 
@@ -237,57 +221,6 @@ def receipt():
             f'{STYLE}{starfield(w, h, 23, 230)}{paper}{"".join(orbit)}{stats}</svg>')
 
 
-# ---------------------------------------------------------------- the green graph
-GREENS = ("#161B22", "#0E4429", "#006D32", "#26A641", "#39D353")
-
-
-def level(count, peak):
-    return 0 if count <= 0 else min(4, 1 + int((count - 1) * 4 / max(peak, 1)))
-
-
-def contributions():
-    w, size, gap = 1280, 17, 4
-    left = 112
-    t = [f'<text x="60" y="72" font-family="{SERIF}" font-size="36" fill="{STAR}">{recent["totalContributions"]} contributions in the last year</text>',
-         f'<text x="60" y="104" font-family="{SERIF}" font-style="italic" font-size="19" fill="{SOFT}">on {active_days} days, with a best day of {best_day["contributionCount"]}. {all_time} since {first_year}.</text>']
-    peak = max(d["contributionCount"] for d in recent_days)
-    top = 158
-    seen = None
-
-    def square(x, y, count, top_value):
-        return f'<rect x="{x}" y="{y}" width="{size}" height="{size}" rx="3" fill="{GREENS[level(count, top_value)]}"/>'
-
-    for col, week in enumerate(recent["weeks"]):
-        x = left + col * (size + gap)
-        month = week["contributionDays"][0]["date"][:7]
-        if month != seen and col < len(recent["weeks"]) - 1:
-            seen = month
-            t.append(f'<text x="{x}" y="{top - 12}" font-family="{MONO}" font-size="14" fill="{SOFT}">{dt.date.fromisoformat(month + "-01").strftime("%b")}</text>')
-        for d in week["contributionDays"]:
-            t.append(square(x, top + d["weekday"] * (size + gap), d["contributionCount"], peak))
-    for wd, name in ((1, "Mon"), (3, "Wed"), (5, "Fri")):
-        t.append(f'<text x="60" y="{top + wd * (size + gap) + 14}" font-family="{MONO}" font-size="14" fill="{SOFT}">{name}</text>')
-    y = top + 7 * (size + gap) + 62
-    t.append(f'<text x="60" y="{y - 18}" font-family="{SERIF}" font-style="italic" font-size="18" fill="{SOFT}">every year, one square per week</text>')
-    weekly = {yr: [sum(d["contributionCount"] for d in wk["contributionDays"]) for wk in c["weeks"]] for yr, c in all_years.items()}
-    peak_week = max(max(v) for v in weekly.values()) or 1
-    for yr, weeks in weekly.items():
-        t.append(f'<text x="60" y="{y + 14}" font-family="{MONO}" font-size="14" fill="{SOFT}">{yr}</text>')
-        for col, count in enumerate(weeks[:54]):
-            t.append(square(left + col * (size + gap), y, count, peak_week))
-        t.append(f'<text x="{left + 54 * (size + gap) + 4}" y="{y + 14}" font-family="{MONO}" font-size="14" font-weight="600" fill="{STAR}">{all_years[yr]["totalContributions"]}</text>')
-        y += size + gap
-    y += 16
-    t.append(f'<text x="{left}" y="{y + 13}" font-family="{MONO}" font-size="14" fill="{SOFT}">Less</text>')
-    for i, col in enumerate(GREENS):
-        t.append(f'<rect x="{left + 48 + i * (size + gap)}" y="{y}" width="{size}" height="{size}" rx="3" fill="{col}"/>')
-    t.append(f'<text x="{left + 48 + 5 * (size + gap) + 6}" y="{y + 13}" font-family="{MONO}" font-size="14" fill="{SOFT}">More</text>')
-    h = y + 50
-    label = f'Green contribution graph: {recent["totalContributions"]} contributions in the last year on {active_days} days, and {all_time} since {first_year}. ' + ", ".join(f'{k}: {v["totalContributions"]}' for k, v in all_years.items()) + "."
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="{esc(label)}">'
-            f'{STYLE}{starfield(w, h, 31, 150)}{"".join(t)}</svg>')
-
-
 def readme():
     prs_list = []
     for p in oss:
@@ -296,7 +229,6 @@ def readme():
         state = "merged" if p["merged"] else "open"
         prs_list.append(f'- **{esc(PROJECT_NAMES.get(repo, repo))}** · [{esc(title)}]({p["url"]}) · <sub>{state}</sub>')
     team_rows = "\n".join(f'| {esc(p["repository"]["nameWithOwner"])} | [{esc(p["title"])}]({p["url"]}) | {"Merged" if p["merged"] else p["state"].title()} |' for p in team)
-    year_rows = "\n".join(f'| {k} | {v["totalContributions"]} |' for k, v in all_years.items())
     merged_oss = next((p for p in reversed(oss) if p["merged"]), None)  # oss is newest first; this line is about the first merge
     restore = next((p for p in oss if "restore" in p["title"].lower()), None)
     first_line = f"First merged PR in a popular open-source project: [{PROJECT_NAMES[merged_oss['repository']['nameWithOwner']]} #{merged_oss['number']}]({merged_oss['url']})" if merged_oss else ""
@@ -344,20 +276,6 @@ It merged, then a later merge from another PR accidentally removed it along with
 
 </details>
 
-## Contributions
-
-<img src="assets/contributions.svg" alt="Green contribution graph: {recent['totalContributions']} contributions in the last year and {all_time} since {first_year}." width="100%">
-
-<details>
-<summary>Yearly totals</summary>
-<br>
-
-| Year | Contributions |
-|---|---|
-{year_rows}
-
-</details>
-
 ## Built
 
 {built_list}
@@ -376,10 +294,7 @@ It merged, then a later merge from another PR accidentally removed it along with
 
 write("cover.svg", cover())
 write("receipt.svg", receipt())
-write("contributions.svg", contributions())
 (ROOT / "README.md").write_text(readme(), encoding="utf8")
 print(json.dumps(dict(repos=len(repos), original=len(original), external=len(external), ext_merged=ext_merged,
                       oss=len(oss), oss_merged=oss_merged, oss_open=oss_open, added=added, removed=removed,
-                      stars=stars_combined, team=len(team), last_year=recent["totalContributions"], active_days=active_days,
-                      best_day=best_day["contributionCount"], all_time=all_time,
-                      years={k: v["totalContributions"] for k, v in all_years.items()})))
+                      stars=stars_combined, team=len(team))))

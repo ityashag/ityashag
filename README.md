@@ -6,8 +6,9 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 7 pull requests, 5 merged, 2 open, plus 192 and minus 38 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 8 pull requests, 5 merged, 3 open, plus 411 and minus 61 lines." width="100%">
 
+- **AMD Gaia** · [cite chat attachments by their own name](https://github.com/amd/gaia/pull/6896) · <sub>open</sub>
 - **AMD Gaia** · [list all nine knowledge categories](https://github.com/amd/gaia/pull/6864) · <sub>merged</sub>
 - **AMD Gaia** · [use a fact id that exists in the scenario example](https://github.com/amd/gaia/pull/6863) · <sub>merged</sub>
 - **AMD Gaia** · [delete the unused code panel CSS](https://github.com/amd/gaia/pull/6859) · <sub>merged</sub>
@@ -38,24 +39,6 @@ It merged, then a later merge from another PR accidentally removed it along with
 | Atharv-V/DevOps-Project | [KEY-18 add jenkins file](https://github.com/Atharv-V/DevOps-Project/pull/2) | Merged |
 | Atharv-V/DevOps-Project | [KEY-16 created interface](https://github.com/Atharv-V/DevOps-Project/pull/1) | Merged |
 | vvsvipul/Space-Invaders-Gesture-Edition | [bug fix in client.py](https://github.com/vvsvipul/Space-Invaders-Gesture-Edition/pull/1) | Merged |
-
-</details>
-
-## Contributions
-
-<img src="assets/contributions.svg" alt="Green contribution graph: 31 contributions in the last year and 195 since 2022." width="100%">
-
-<details>
-<summary>Yearly totals</summary>
-<br>
-
-| Year | Contributions |
-|---|---|
-| 2022 | 49 |
-| 2023 | 30 |
-| 2024 | 85 |
-| 2025 | 0 |
-| 2026 | 31 |
 
 </details>
 
