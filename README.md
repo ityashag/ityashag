@@ -6,23 +6,42 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 15 pull requests, 10 merged, 5 open, plus 890 and minus 108 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 16 pull requests, 10 merged, 6 open, plus 1056 and minus 241 lines." width="100%">
 
-- **AMD Gaia** · [keep the chat-create error clear of the desktop title bar](https://github.com/amd/gaia/pull/6973) · <sub>open</sub>
-- **AMD Gaia** · [use the shared cloud catalog for status and preload](https://github.com/amd/gaia/pull/6972) · <sub>open</sub>
-- **AMD Gaia** · [show install records the TUI cannot read](https://github.com/amd/gaia/pull/6971) · <sub>open</sub>
-- **AMD Gaia** · [show a pip-installed agent&#x27;s version in agent status](https://github.com/amd/gaia/pull/6928) · <sub>merged</sub>
-- **AMD Gaia** · [classify chat helper models with the shared cloud catalog](https://github.com/amd/gaia/pull/6926) · <sub>merged</sub>
-- **AMD Gaia** · [keep the chat-create error until it is dismissed](https://github.com/amd/gaia/pull/6912) · <sub>merged</sub>
-- **AMD Gaia** · [recognize cloud models another client discovered](https://github.com/amd/gaia/pull/6907) · <sub>merged</sub>
-- **AMD Gaia** · [cite chat attachments by their own name](https://github.com/amd/gaia/pull/6896) · <sub>merged</sub>
-- **AMD Gaia** · [list all nine knowledge categories](https://github.com/amd/gaia/pull/6864) · <sub>merged</sub>
-- **AMD Gaia** · [use a fact id that exists in the scenario example](https://github.com/amd/gaia/pull/6863) · <sub>merged</sub>
-- **AMD Gaia** · [delete the unused code panel CSS](https://github.com/amd/gaia/pull/6859) · <sub>merged</sub>
-- **KanaDojo** · [restore themes removed from community-themes.json](https://github.com/lingdojo/kana-dojo/pull/33693) · <sub>open</sub>
-- **AMD Gaia** · [remove nvm alias step from the Windows tab](https://github.com/amd/gaia/pull/6852) · <sub>merged</sub>
-- **KanaDojo** · [add new Tsuyu Drizzle theme](https://github.com/lingdojo/kana-dojo/pull/33690) · <sub>merged</sub>
-- **MinIO JS** · [read AccessKeyId in IamAwsProvider credential responses](https://github.com/minio/minio-js/pull/1516) · <sub>open</sub>
+Each line says what the change does for the people who use the project.
+
+- **AMD Gaia** · [one embeddings call per batch, fail on the first error](https://github.com/amd/gaia/pull/6975) · <sub>open</sub><br>
+  With Lemonade down or the embedding model name wrong, code indexing now fails on its first call and says what to do.
+- **AMD Gaia** · [keep the chat-create error clear of the desktop title bar](https://github.com/amd/gaia/pull/6973) · <sub>open</sub><br>
+  In the desktop app, the &quot;chat was created, but…&quot; error can now be selected and copied, and it no longer sits under the Windows window buttons.
+- **AMD Gaia** · [use the shared cloud catalog for status and preload](https://github.com/amd/gaia/pull/6972) · <sub>open</sub><br>
+  When the default chat model is a cloud model GAIA learns about at runtime, such as `opencode.*`, Settings no longer treats it as a local model.
+- **AMD Gaia** · [show install records the TUI cannot read](https://github.com/amd/gaia/pull/6971) · <sub>open</sub><br>
+  When an installed agent&#x27;s install record is corrupt, the TUI now says so instead of dropping the agent without a word.
+- **AMD Gaia** · [show a pip-installed agent&#x27;s version in agent status](https://github.com/amd/gaia/pull/6928) · <sub>merged</sub><br>
+  `gaia agent status` now shows the installed version of an agent installed with `pip`.
+- **AMD Gaia** · [classify chat helper models with the shared cloud catalog](https://github.com/amd/gaia/pull/6926) · <sub>merged</sub><br>
+  A chat meant to stay on your PC is no longer sent to a cloud model just to give it a title.
+- **AMD Gaia** · [keep the chat-create error until it is dismissed](https://github.com/amd/gaia/pull/6912) · <sub>merged</sub><br>
+  The &quot;chat was created, but...&quot; error now stays visible until you dismiss it, and it no longer covers the chat box.
+- **AMD Gaia** · [recognize cloud models another client discovered](https://github.com/amd/gaia/pull/6907) · <sub>merged</sub><br>
+  A cloud model that one part of GAIA has discovered is now recognized as cloud everywhere, from any provider, instead of being treated as if it ran on your PC.
+- **AMD Gaia** · [cite chat attachments by their own name](https://github.com/amd/gaia/pull/6896) · <sub>merged</sub><br>
+  Answers about a file attached with the + button now cite the file&#x27;s own name instead of GAIA&#x27;s internal upload ID: `According to kestrel-plan.pdf, page 1:` rather than `According to f27f4885-cec8-4161-9dbd-ebc8a3c25005.pdf, page 1:`.
+- **AMD Gaia** · [list all nine knowledge categories](https://github.com/amd/gaia/pull/6864) · <sub>merged</sub><br>
+  Corrects the memory guide&#x27;s category count from six to nine and adds the three missing categories: `profile`, `system` and `permission`.
+- **AMD Gaia** · [use a fact id that exists in the scenario example](https://github.com/amd/gaia/pull/6863) · <sub>merged</sub><br>
+  Fixes the `fact_id` in the custom scenario example, which names a fact that doesn&#x27;t exist in the corpus manifest.
+- **AMD Gaia** · [delete the unused code panel CSS](https://github.com/amd/gaia/pull/6859) · <sub>merged</sub><br>
+  Removes styling code the GAIA website no longer used, so the site ships less dead CSS.
+- **KanaDojo** · [restore themes removed from community-themes.json](https://github.com/lingdojo/kana-dojo/pull/33693) · <sub>open</sub><br>
+  Brings back five community themes that two later merges had accidentally deleted.
+- **AMD Gaia** · [remove nvm alias step from the Windows tab](https://github.com/amd/gaia/pull/6852) · <sub>merged</sub><br>
+  Removes the `nvm alias default 20.20.0` step from the Windows tab of the setup guide, because NVM for Windows has no `alias` command.
+- **KanaDojo** · [add new Tsuyu Drizzle theme](https://github.com/lingdojo/kana-dojo/pull/33690) · <sub>merged</sub><br>
+  Adds the &quot;Tsuyu Drizzle&quot; color theme to `community/content/community-themes.json`, using the values from the issue.
+- **MinIO JS** · [read AccessKeyId in IamAwsProvider credential responses](https://github.com/minio/minio-js/pull/1516) · <sub>open</sub><br>
+  Lets the MinIO JavaScript client sign in with AWS credentials on EC2 and in containers, which failed because it read the wrong field name.
 
 <details>
 <summary>What happened to the merged theme?</summary>

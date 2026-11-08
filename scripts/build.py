@@ -7,6 +7,7 @@ Every number in the output comes from the GitHub API at build time.
 import datetime as dt
 import html
 import json
+import re
 import math
 import pathlib
 import random
@@ -32,7 +33,7 @@ user = gql('''{user(login:"%s"){createdAt
   repositories(first:100,ownerAffiliations:OWNER,privacy:PUBLIC,orderBy:{field:PUSHED_AT,direction:DESC}){nodes{
     name isFork url primaryLanguage{name}}}
   pullRequests(first:100,orderBy:{field:CREATED_AT,direction:DESC}){nodes{
-    number title url state merged additions deletions
+    number title url state merged additions deletions body
     repository{nameWithOwner stargazerCount owner{login}}}}}}''' % LOGIN)["user"]
 now = dt.datetime.now(dt.timezone.utc)
 repos = user["repositories"]["nodes"]
@@ -221,13 +222,41 @@ def receipt():
             f'{STYLE}{starfield(w, h, 23, 230)}{paper}{"".join(orbit)}{stats}</svg>')
 
 
+# What a PR does, in plain words, where its Summary leads with code instead.
+# Each line restates that PR's own description.
+PLAIN = {
+    "https://github.com/amd/gaia/pull/6926": "A chat meant to stay on your PC is no longer sent to a cloud model just to give it a title.",
+    "https://github.com/amd/gaia/pull/6907": "A cloud model that one part of GAIA has discovered is now recognized as cloud everywhere, from any provider, instead of being treated as if it ran on your PC.",
+    "https://github.com/amd/gaia/pull/6859": "Removes styling code the GAIA website no longer used, so the site ships less dead CSS.",
+    "https://github.com/lingdojo/kana-dojo/pull/33693": "Brings back five community themes that two later merges had accidentally deleted.",
+    "https://github.com/minio/minio-js/pull/1516": "Lets the MinIO JavaScript client sign in with AWS credentials on EC2 and in containers, which failed because it read the wrong field name.",
+}
+
+
+def impact(body):
+    """The first sentence of a PR's Summary, in plain text: what it does for people."""
+    text = body or ""
+    m = re.search(r"^#+\s*Summary\s*$(.*?)(?=^#+\s|\Z)", text, re.M | re.S)
+    if m:
+        text = m.group(1)
+    text = re.sub(r"<!--.*?-->", " ", text, flags=re.S)
+    para = next((b.strip() for b in re.split(r"\n\s*\n", text) if b.strip() and not b.strip().startswith(("#", "|", "-", "*", ">", "!", "<", "```"))), "")
+    para = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", para)
+    para = re.sub(r"\*\*|__", "", para)
+    para = " ".join(para.split())
+    sentence = re.split(r"(?<=[.!?])\s+(?=[A-Z])", para, maxsplit=1)[0]
+    return sentence if 20 <= len(sentence) <= 240 else ""
+
+
 def readme():
     prs_list = []
     for p in oss:
         repo = p["repository"]["nameWithOwner"]
         title = p["title"].split(": ", 1)[-1]
         state = "merged" if p["merged"] else "open"
-        prs_list.append(f'- **{esc(PROJECT_NAMES.get(repo, repo))}** · [{esc(title)}]({p["url"]}) · <sub>{state}</sub>')
+        line = f'- **{esc(PROJECT_NAMES.get(repo, repo))}** · [{esc(title)}]({p["url"]}) · <sub>{state}</sub>'
+        why = PLAIN.get(p["url"]) or impact(p.get("body"))
+        prs_list.append(f"{line}<br>\n  {esc(why)}" if why else line)
     team_rows = "\n".join(f'| {esc(p["repository"]["nameWithOwner"])} | [{esc(p["title"])}]({p["url"]}) | {"Merged" if p["merged"] else p["state"].title()} |' for p in team)
     merged_oss = next((p for p in reversed(oss) if p["merged"]), None)  # oss is newest first; this line is about the first merge
     restore = next((p for p in oss if "restore" in p["title"].lower()), None)
@@ -255,6 +284,8 @@ Working professional, contributing to open source.
 ## Receipts
 
 <img src="assets/receipt.svg" alt="Paper receipt floating in space: {len(oss)} pull requests, {oss_merged} merged, {oss_open} open, plus {added} and minus {removed} lines." width="100%">
+
+Each line says what the change does for the people who use the project.
 
 {chr(10).join(prs_list)}
 
