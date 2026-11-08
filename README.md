@@ -6,9 +6,14 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 10 pull requests, 7 merged, 3 open, plus 586 and minus 73 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 15 pull requests, 10 merged, 5 open, plus 890 and minus 108 lines." width="100%">
 
-- **AMD Gaia** · [keep the chat-create error until it is dismissed](https://github.com/amd/gaia/pull/6912) · <sub>open</sub>
+- **AMD Gaia** · [keep the chat-create error clear of the desktop title bar](https://github.com/amd/gaia/pull/6973) · <sub>open</sub>
+- **AMD Gaia** · [use the shared cloud catalog for status and preload](https://github.com/amd/gaia/pull/6972) · <sub>open</sub>
+- **AMD Gaia** · [show install records the TUI cannot read](https://github.com/amd/gaia/pull/6971) · <sub>open</sub>
+- **AMD Gaia** · [show a pip-installed agent&#x27;s version in agent status](https://github.com/amd/gaia/pull/6928) · <sub>merged</sub>
+- **AMD Gaia** · [classify chat helper models with the shared cloud catalog](https://github.com/amd/gaia/pull/6926) · <sub>merged</sub>
+- **AMD Gaia** · [keep the chat-create error until it is dismissed](https://github.com/amd/gaia/pull/6912) · <sub>merged</sub>
 - **AMD Gaia** · [recognize cloud models another client discovered](https://github.com/amd/gaia/pull/6907) · <sub>merged</sub>
 - **AMD Gaia** · [cite chat attachments by their own name](https://github.com/amd/gaia/pull/6896) · <sub>merged</sub>
 - **AMD Gaia** · [list all nine knowledge categories](https://github.com/amd/gaia/pull/6864) · <sub>merged</sub>
@@ -59,4 +64,4 @@ It merged, then a later merge from another PR accidentally removed it along with
 - [ ] First merge at [MinIO](https://github.com/minio/minio-js)
 - [ ] First merged PR in a project with 10k+ stars
 
-<sub>Numbers from the GitHub API, last updated 7 Nov 2026.</sub>
+<sub>Numbers from the GitHub API, last updated 8 Nov 2026.</sub>
