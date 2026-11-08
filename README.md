@@ -6,18 +6,27 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 16 pull requests, 10 merged, 6 open, plus 1056 and minus 241 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 16 pull requests, 10 merged, 6 open, plus 1128 and minus 254 lines." width="100%">
 
-Each line says what the change does for the people who use the project.
+16 pull requests to 3 projects (Bug fixes 11 · Docs 3 · Cleanup 1 · Features 1). 10 of 10 code fixes shipped with tests.
 
-- **AMD Gaia** · [one embeddings call per batch, fail on the first error](https://github.com/amd/gaia/pull/6975) · <sub>open</sub><br>
-  With Lemonade down or the embedding model name wrong, code indexing now fails on its first call and says what to do.
-- **AMD Gaia** · [keep the chat-create error clear of the desktop title bar](https://github.com/amd/gaia/pull/6973) · <sub>open</sub><br>
-  In the desktop app, the &quot;chat was created, but…&quot; error can now be selected and copied, and it no longer sits under the Windows window buttons.
-- **AMD Gaia** · [use the shared cloud catalog for status and preload](https://github.com/amd/gaia/pull/6972) · <sub>open</sub><br>
-  When the default chat model is a cloud model GAIA learns about at runtime, such as `opencode.*`, Settings no longer treats it as a local model.
-- **AMD Gaia** · [show install records the TUI cannot read](https://github.com/amd/gaia/pull/6971) · <sub>open</sub><br>
-  When an installed agent&#x27;s install record is corrupt, the TUI now says so instead of dropping the agent without a word.
+### Where the work went
+
+| Area | Pull requests | Languages | Latest change |
+|---|---|---|---|
+| AMD Gaia · **Agent UI backend** | 3 (2 merged) | Python | [#6972](https://github.com/amd/gaia/pull/6972) When the default chat model is a cloud model GAIA learns about at runtime, such as `opencode.*`, Settings no longer treats it as a local model. |
+| AMD Gaia · **Docs** | 3 (3 merged) | Markdown | [#6864](https://github.com/amd/gaia/pull/6864) Corrects the memory guide&#x27;s category count from six to nine and adds the three missing categories: `profile`, `system` and `permission`. |
+| AMD Gaia · **Agent UI** | 2 (1 merged) | TypeScript, CSS | [#6973](https://github.com/amd/gaia/pull/6973) In the desktop app, the &quot;chat was created, but…&quot; error can now be selected and copied, and it no longer sits under the Windows window buttons. |
+| KanaDojo · **Community themes** | 2 (1 merged) | JSON | [#33693](https://github.com/lingdojo/kana-dojo/pull/33693) Brings back five community themes that two later merges had accidentally deleted. |
+| AMD Gaia · **Agents and installs** | 1 (1 merged) | Python | [#6928](https://github.com/amd/gaia/pull/6928) `gaia agent status` now shows the installed version of an agent installed with `pip`. |
+| AMD Gaia · **Code search** | 1 (0 merged) | Python, Markdown | [#6975](https://github.com/amd/gaia/pull/6975) With Lemonade down or the embedding model name wrong, code indexing now fails on its first call and says what to do. |
+| AMD Gaia · **Model client** | 1 (1 merged) | Python | [#6907](https://github.com/amd/gaia/pull/6907) A cloud model that one part of GAIA has discovered is now recognized as cloud everywhere, from any provider, instead of being treated as if it ran on your PC. |
+| AMD Gaia · **Terminal app** | 1 (0 merged) | Go | [#6971](https://github.com/amd/gaia/pull/6971) When an installed agent&#x27;s install record is corrupt, the TUI now says so instead of dropping the agent without a word. |
+| AMD Gaia · **Website** | 1 (1 merged) | CSS | [#6859](https://github.com/amd/gaia/pull/6859) Removes styling code the GAIA website no longer used, so the site ships less dead CSS. |
+| MinIO JS · **AWS credentials** | 1 (0 merged) | JavaScript, TypeScript | [#1516](https://github.com/minio/minio-js/pull/1516) Lets the MinIO JavaScript client sign in with AWS credentials on EC2 and in containers, which failed because it read the wrong field name. |
+
+### Recently merged
+
 - **AMD Gaia** · [show a pip-installed agent&#x27;s version in agent status](https://github.com/amd/gaia/pull/6928) · <sub>merged</sub><br>
   `gaia agent status` now shows the installed version of an agent installed with `pip`.
 - **AMD Gaia** · [classify chat helper models with the shared cloud catalog](https://github.com/amd/gaia/pull/6926) · <sub>merged</sub><br>
@@ -28,20 +37,53 @@ Each line says what the change does for the people who use the project.
   A cloud model that one part of GAIA has discovered is now recognized as cloud everywhere, from any provider, instead of being treated as if it ran on your PC.
 - **AMD Gaia** · [cite chat attachments by their own name](https://github.com/amd/gaia/pull/6896) · <sub>merged</sub><br>
   Answers about a file attached with the + button now cite the file&#x27;s own name instead of GAIA&#x27;s internal upload ID: `According to kestrel-plan.pdf, page 1:` rather than `According to f27f4885-cec8-4161-9dbd-ebc8a3c25005.pdf, page 1:`.
-- **AMD Gaia** · [list all nine knowledge categories](https://github.com/amd/gaia/pull/6864) · <sub>merged</sub><br>
+
+<details>
+<summary>All 16 pull requests, each with what it does</summary>
+<br>
+
+**AMD Gaia** · 13
+
+- [one embeddings call per batch, fail on the first error](https://github.com/amd/gaia/pull/6975) · <sub>open</sub><br>
+  With Lemonade down or the embedding model name wrong, code indexing now fails on its first call and says what to do.
+- [keep the chat-create error clear of the desktop title bar](https://github.com/amd/gaia/pull/6973) · <sub>open</sub><br>
+  In the desktop app, the &quot;chat was created, but…&quot; error can now be selected and copied, and it no longer sits under the Windows window buttons.
+- [use the shared cloud catalog for status, preload and local-only](https://github.com/amd/gaia/pull/6972) · <sub>open</sub><br>
+  When the default chat model is a cloud model GAIA learns about at runtime, such as `opencode.*`, Settings no longer treats it as a local model.
+- [show install records the TUI cannot read](https://github.com/amd/gaia/pull/6971) · <sub>open</sub><br>
+  When an installed agent&#x27;s install record is corrupt, the TUI now says so instead of dropping the agent without a word.
+- [show a pip-installed agent&#x27;s version in agent status](https://github.com/amd/gaia/pull/6928) · <sub>merged</sub><br>
+  `gaia agent status` now shows the installed version of an agent installed with `pip`.
+- [classify chat helper models with the shared cloud catalog](https://github.com/amd/gaia/pull/6926) · <sub>merged</sub><br>
+  A chat meant to stay on your PC is no longer sent to a cloud model just to give it a title.
+- [keep the chat-create error until it is dismissed](https://github.com/amd/gaia/pull/6912) · <sub>merged</sub><br>
+  The &quot;chat was created, but...&quot; error now stays visible until you dismiss it, and it no longer covers the chat box.
+- [recognize cloud models another client discovered](https://github.com/amd/gaia/pull/6907) · <sub>merged</sub><br>
+  A cloud model that one part of GAIA has discovered is now recognized as cloud everywhere, from any provider, instead of being treated as if it ran on your PC.
+- [cite chat attachments by their own name](https://github.com/amd/gaia/pull/6896) · <sub>merged</sub><br>
+  Answers about a file attached with the + button now cite the file&#x27;s own name instead of GAIA&#x27;s internal upload ID: `According to kestrel-plan.pdf, page 1:` rather than `According to f27f4885-cec8-4161-9dbd-ebc8a3c25005.pdf, page 1:`.
+- [list all nine knowledge categories](https://github.com/amd/gaia/pull/6864) · <sub>merged</sub><br>
   Corrects the memory guide&#x27;s category count from six to nine and adds the three missing categories: `profile`, `system` and `permission`.
-- **AMD Gaia** · [use a fact id that exists in the scenario example](https://github.com/amd/gaia/pull/6863) · <sub>merged</sub><br>
+- [use a fact id that exists in the scenario example](https://github.com/amd/gaia/pull/6863) · <sub>merged</sub><br>
   Fixes the `fact_id` in the custom scenario example, which names a fact that doesn&#x27;t exist in the corpus manifest.
-- **AMD Gaia** · [delete the unused code panel CSS](https://github.com/amd/gaia/pull/6859) · <sub>merged</sub><br>
+- [delete the unused code panel CSS](https://github.com/amd/gaia/pull/6859) · <sub>merged</sub><br>
   Removes styling code the GAIA website no longer used, so the site ships less dead CSS.
-- **KanaDojo** · [restore themes removed from community-themes.json](https://github.com/lingdojo/kana-dojo/pull/33693) · <sub>open</sub><br>
-  Brings back five community themes that two later merges had accidentally deleted.
-- **AMD Gaia** · [remove nvm alias step from the Windows tab](https://github.com/amd/gaia/pull/6852) · <sub>merged</sub><br>
+- [remove nvm alias step from the Windows tab](https://github.com/amd/gaia/pull/6852) · <sub>merged</sub><br>
   Removes the `nvm alias default 20.20.0` step from the Windows tab of the setup guide, because NVM for Windows has no `alias` command.
-- **KanaDojo** · [add new Tsuyu Drizzle theme](https://github.com/lingdojo/kana-dojo/pull/33690) · <sub>merged</sub><br>
+
+**KanaDojo** · 2
+
+- [restore themes removed from community-themes.json](https://github.com/lingdojo/kana-dojo/pull/33693) · <sub>open</sub><br>
+  Brings back five community themes that two later merges had accidentally deleted.
+- [add new Tsuyu Drizzle theme](https://github.com/lingdojo/kana-dojo/pull/33690) · <sub>merged</sub><br>
   Adds the &quot;Tsuyu Drizzle&quot; color theme to `community/content/community-themes.json`, using the values from the issue.
-- **MinIO JS** · [read AccessKeyId in IamAwsProvider credential responses](https://github.com/minio/minio-js/pull/1516) · <sub>open</sub><br>
+
+**MinIO JS** · 1
+
+- [read AccessKeyId in IamAwsProvider credential responses](https://github.com/minio/minio-js/pull/1516) · <sub>open</sub><br>
   Lets the MinIO JavaScript client sign in with AWS credentials on EC2 and in containers, which failed because it read the wrong field name.
+
+</details>
 
 <details>
 <summary>What happened to the merged theme?</summary>

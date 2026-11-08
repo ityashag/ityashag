@@ -31,14 +31,22 @@ def gql(query):
 
 user = gql('''{user(login:"%s"){createdAt
   repositories(first:100,ownerAffiliations:OWNER,privacy:PUBLIC,orderBy:{field:PUSHED_AT,direction:DESC}){nodes{
-    name isFork url primaryLanguage{name}}}
-  pullRequests(first:100,orderBy:{field:CREATED_AT,direction:DESC}){nodes{
-    number title url state merged additions deletions body
-    repository{nameWithOwner stargazerCount owner{login}}}}}}''' % LOGIN)["user"]
+    name isFork url primaryLanguage{name}}}}}''' % LOGIN)["user"]
+prs, cursor = [], None
+while True:
+    after = f',after:"{cursor}"' if cursor else ""
+    page = gql('''{user(login:"%s"){pullRequests(first:50%s,orderBy:{field:CREATED_AT,direction:DESC}){
+      pageInfo{hasNextPage endCursor}
+      nodes{number title url state merged additions deletions body
+        repository{nameWithOwner stargazerCount owner{login}}
+        files(first:100){nodes{path additions deletions}}}}}}''' % (LOGIN, after))["user"]["pullRequests"]
+    prs += page["nodes"]
+    if not page["pageInfo"]["hasNextPage"]:
+        break
+    cursor = page["pageInfo"]["endCursor"]
 now = dt.datetime.now(dt.timezone.utc)
 repos = user["repositories"]["nodes"]
 original = [r for r in repos if not r["isFork"]]
-prs = user["pullRequests"]["nodes"]
 external = [p for p in prs if p["repository"]["owner"]["login"] != LOGIN]
 oss = [p for p in external if p["repository"]["stargazerCount"] >= 1000]
 team = [p for p in external if p["repository"]["stargazerCount"] < 1000]
@@ -87,6 +95,101 @@ STYLE = """<style>
 @keyframes meteor{0%{transform:translate(0,0);opacity:0}1.5%{opacity:.9}7%{transform:translate(-300px,150px);opacity:0}100%{transform:translate(-300px,150px);opacity:0}}
 @media (prefers-reduced-motion:reduce){.tw,.sp,.bob,.pulse,.meteor{animation:none}.draw{animation:none;stroke-dashoffset:0}.rise{animation:none;opacity:1}}
 </style>"""
+
+
+# The conventional-commit type in a PR title, as a kind of work.
+KINDS = {"fix": "Bug fixes", "docs": "Docs", "test": "Tests", "feat": "Features", "theme": "Features",
+         "perf": "Performance", "chore": "Cleanup", "refactor": "Cleanup", "style": "Cleanup", "ci": "Build and CI"}
+# Areas of each codebase by path prefix; the first match wins.
+AREAS = {
+    "amd/gaia": [("tui/", "Terminal app"), ("src/gaia/apps/webui/", "Agent UI"), ("src/gaia/ui/", "Agent UI backend"),
+                 ("src/gaia/upload_names.py", "Agent UI backend"), ("src/gaia/code_index/", "Code search"),
+                 ("src/gaia/rag/", "Document Q&A"), ("src/gaia/llm/", "Model client"),
+                 ("src/gaia/agents/tools/", "Agent tools"), ("src/gaia/agents/", "Agents and installs"),
+                 ("src/gaia/hub/", "Agents and installs"), ("src/gaia/cli.py", "Command line"),
+                 ("website/", "Website"), ("docs/", "Docs")],
+    "lingdojo/kana-dojo": [("community/", "Community themes")],
+    "minio/minio-js": [("src/IamAwsProvider", "AWS credentials"), ("src/", "Client library")],
+}
+LANGS = {".py": "Python", ".ts": "TypeScript", ".tsx": "TypeScript", ".go": "Go", ".css": "CSS", ".js": "JavaScript",
+         ".json": "JSON", ".md": "Markdown", ".mdx": "Markdown"}
+CODE_EXT = (".py", ".ts", ".tsx", ".go", ".js", ".css")
+TEST_PATH = re.compile(r"(^|/)(tests?|__tests__|visual)/|_test\.go$|\.test\.[jt]sx?$|(^|/)test_[^/]+\.py$")
+
+
+def kind(p):
+    m = re.match(r"(\w+)(\([^)]*\))?!?:", p["title"])
+    return KINDS.get(m.group(1).lower(), "Other") if m else "Other"
+
+
+def files(p):
+    return (p.get("files") or {}).get("nodes") or []
+
+
+def area_of(repo, path):
+    for prefix, name in AREAS.get(repo, []):
+        if path.startswith(prefix):
+            return name
+    return path.split("/")[0] if "/" in path else PROJECT_NAMES.get(repo, repo)
+
+
+def main_area(p):
+    """Where most of a PR's non-test lines went."""
+    repo = p["repository"]["nameWithOwner"]
+    changed = [f for f in files(p) if not TEST_PATH.search(f["path"])] or files(p)
+    weight = {}
+    for f in changed:
+        a = area_of(repo, f["path"])
+        weight[a] = weight.get(a, 0) + f["additions"] + f["deletions"]
+    return max(weight, key=weight.get) if weight else PROJECT_NAMES.get(repo, repo)
+
+
+def is_code_fix(p):
+    return kind(p) == "Bug fixes" and any(
+        f["path"].endswith(CODE_EXT) and not f["path"].startswith("docs/") for f in files(p))
+
+
+def has_tests(p):
+    return any(TEST_PATH.search(f["path"]) for f in files(p))
+
+
+def language_share(items):
+    """Each language's share of the lines changed, largest first."""
+    lines = {}
+    for p in items:
+        for f in files(p):
+            lang = LANGS.get(pathlib.PurePosixPath(f["path"]).suffix)
+            if lang:
+                lines[lang] = lines.get(lang, 0) + f["additions"] + f["deletions"]
+    total = sum(lines.values()) or 1
+    return [(lang, round(100 * n / total)) for lang, n in sorted(lines.items(), key=lambda kv: -kv[1])]
+
+
+def area_rows():
+    """One row per project area: its PRs newest first."""
+    rows = {}
+    for p in oss:
+        key = (PROJECT_NAMES.get(p["repository"]["nameWithOwner"], p["repository"]["nameWithOwner"]), main_area(p))
+        rows.setdefault(key, []).append(p)
+    return sorted(rows.items(), key=lambda kv: (-len(kv[1]), kv[0]))
+
+
+def summary():
+    """Everything the receipt and README say about the work, from the PRs themselves."""
+    by_project = {}
+    kinds = {}
+    for p in oss:
+        by_project.setdefault(PROJECT_NAMES.get(p["repository"]["nameWithOwner"], p["repository"]["nameWithOwner"]), []).append(p)
+        kinds[kind(p)] = kinds.get(kind(p), 0) + 1
+    code_fixes = [p for p in oss if is_code_fix(p)]
+    return {
+        "projects": sorted(by_project.items(), key=lambda kv: -len(kv[1])),
+        "kinds": sorted(kinds.items(), key=lambda kv: -kv[1]),
+        "code_fixes": code_fixes,
+        "tested": sum(has_tests(p) for p in code_fixes),
+        "areas": area_rows(),
+        "langs": language_share(oss),
+    }
 
 
 def starfield(w, h, seed, count=170):
@@ -158,12 +261,8 @@ def cover():
 
 def receipt():
     x0, rw, w = 70, 590, 1280
-    item_h = 62
-    paper_h = 188 + item_h * len(oss) + 214
-    h = paper_h + 110
     top = 44
-    teeth = "".join(f"L{x0 + rw - i * 20 - 10},{top + paper_h + 10} L{x0 + rw - (i + 1) * 20},{top + paper_h} " for i in range(int(rw / 20)))
-    t = [f'<path d="M{x0},{top} L{x0 + rw},{top} L{x0 + rw},{top + paper_h} {teeth}Z" fill="{PAPER}"/>']
+    t = []
 
     def line(y, left, right="", size=19, weight=400, lc=INK, rc=None):
         s = f'<text x="{x0 + 36}" y="{y}" font-family="{MONO}" font-size="{size}" font-weight="{weight}" fill="{lc}">{esc(left)}</text>'
@@ -174,20 +273,33 @@ def receipt():
     def rule(y):
         return f'<path d="M{x0 + 36},{y} L{x0 + rw - 36},{y}" stroke="{FAINT}" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>'
 
+    sm = summary()
     y = top + 56
     t.append(f'<text x="{x0 + rw / 2}" y="{y}" text-anchor="middle" font-family="{SERIF}" font-weight="700" font-size="33" fill="{INK}">Open Source Receipt</text>')
     y += 32
     t.append(f'<text x="{x0 + rw / 2}" y="{y}" text-anchor="middle" font-family="{MONO}" font-size="15" fill="{FAINT}">{esc(today.upper())}  ·  {LOGIN.upper()}</text>')
+
+    def section(y, title, rows):
+        y += 26
+        t.append(rule(y))
+        y += 34
+        t.append(line(y, title, "", 14, 700, FAINT))
+        for left, right, strong in rows:
+            y += 28
+            t.append(line(y, left, right, 17, 700 if strong else 400))
+        return y
+
+    shown = sm["projects"][:4]
+    rows = [(name, f'{sum(p["merged"] for p in items)} merged · {sum(not p["merged"] for p in items)} open', False) for name, items in shown]
+    if len(sm["projects"]) > len(shown):
+        rows.append((f'+ {len(sm["projects"]) - len(shown)} more projects', "", False))
+    y = section(y, "PROJECTS", rows)
+    rows = [(k, str(n), False) for k, n in sm["kinds"]]
+    rows.append(("CODE FIXES WITH TESTS", f'{sm["tested"]} / {len(sm["code_fixes"])}', True))
+    y = section(y, "WORK", rows)
+    y = section(y, "WHERE IN THE CODE", [(area, f'{len(items)} PR{"s" if len(items) > 1 else ""}', False) for (_, area), items in sm["areas"][:6]])
+    y = section(y, "LANGUAGES", [(" · ".join(f"{lang} {pct}%" for lang, pct in sm["langs"][:3]), "", False)])
     y += 26
-    t.append(rule(y))
-    y += 38
-    for p in oss:
-        t.append(line(y, f'{p["repository"]["nameWithOwner"]} #{p["number"]}', f'+{p["additions"]} −{p["deletions"]}', 19, 600))
-        title = p["title"].split(": ", 1)[-1]
-        title = title if len(title) <= 40 else title[:39] + "…"
-        t.append(line(y + 24, title, "MERGED" if p["merged"] else "OPEN", 15, 400, FAINT, "#1A7F37" if p["merged"] else FAINT))
-        y += item_h
-    y -= 16
     t.append(rule(y))
     y += 38
     t.append(line(y, "PULL REQUESTS", str(len(oss)), 19, 700))
@@ -208,6 +320,10 @@ def receipt():
         t.append(f'<rect x="{pos}" y="{y}" width="{n}" height="32" fill="{INK}"/>')
         pos += n + (int(ch) % 3) + 3
     t.append(f'<text x="{x0 + rw / 2}" y="{y + 56}" text-anchor="middle" font-family="{MONO}" font-size="14" fill="{FAINT}">thank you for reviewing</text>')
+    paper_h = y + 84 - top
+    h = max(paper_h + 110, 720)
+    teeth = "".join(f"L{x0 + rw - i * 20 - 10},{top + paper_h + 10} L{x0 + rw - (i + 1) * 20},{top + paper_h} " for i in range(int(rw / 20)))
+    t.insert(0, f'<path d="M{x0},{top} L{x0 + rw},{top} L{x0 + rw},{top + paper_h} {teeth}Z" fill="{PAPER}"/>')
     paper = f'<g class="bob"><g transform="rotate(-1.2 {x0 + rw / 2} {top + paper_h / 2})">{"".join(t)}</g></g>'
 
     # Orrery: one orbit per project, one moon per pull request.
@@ -220,10 +336,12 @@ def receipt():
         r = 58 + i * 46
         orbit.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{STAR}" stroke-opacity=".3"/>')
         moons = []
+        # Smaller moons as a project gathers more PRs, so its orbit never crowds.
+        moon = 6 if len(items) <= 18 else max(2.5, 6 * (18 / len(items)) ** .5)
         for j, p in enumerate(items):
             a = math.radians(40 + i * 75 + j * 360 / len(items))
             col = MERGED if p["merged"] else STAR
-            moons.append(f'<circle cx="{cx + r * math.cos(a):.1f}" cy="{cy + r * math.sin(a):.1f}" r="6" fill="{col}" stroke="{SPACE}" stroke-width="2"/>')
+            moons.append(f'<circle cx="{cx + r * math.cos(a):.1f}" cy="{cy + r * math.sin(a):.1f}" r="{moon:.1f}" fill="{col}" stroke="{SPACE}" stroke-width="2"/>')
         orbit.append(f'<g class="sp" style="--d:{70 + i * 45}s;--c:{cx}px {cy}px">{"".join(moons)}</g>')
         orbit.append(f'<text x="{cx}" y="{cy - r - 7}" text-anchor="middle" font-family="{SERIF}" font-style="italic" font-size="15" fill="{SOFT}" stroke="{SPACE}" stroke-width="4" paint-order="stroke">{esc(PROJECT_NAMES.get(repo, repo))}</text>')
     sx = 742
@@ -235,7 +353,8 @@ def receipt():
     stats = (stat(410, f"{len(oss)} pull requests", f"across {len(oss_projects)} projects, {oss_merged} merged so far")
              + stat(510, f"{stars_combined:,} stars", "on those projects (theirs, not mine)")
              + stat(610, f"{ext_merged} merged", "in other people's repos, team projects included"))
-    label = f"A paper receipt floating in space listing {len(oss)} open-source pull requests: {oss_merged} merged, {oss_open} open, +{added} and -{removed} lines. An orrery shows them orbiting {len(oss_projects)} projects."
+    label = (f"A paper receipt floating in space summing up {len(oss)} open-source pull requests by project, kind of work, "
+             f"area of the code and language: {oss_merged} merged, {oss_open} open. An orrery shows them orbiting {len(oss_projects)} projects.")
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="{esc(label)}">'
             f'{STYLE}{starfield(w, h, 23, 230)}{paper}{"".join(orbit)}{stats}</svg>')
 
@@ -266,15 +385,60 @@ def impact(body):
     return sentence if 20 <= len(sentence) <= 240 else ""
 
 
+def why(p):
+    return PLAIN.get(p["url"]) or impact(p.get("body"))
+
+
+def pr_line(p, with_project=False):
+    """One PR as a list item, with what it does for people underneath."""
+    repo = p["repository"]["nameWithOwner"]
+    title = p["title"].split(": ", 1)[-1]
+    project = f"**{esc(PROJECT_NAMES.get(repo, repo))}** · " if with_project else ""
+    line = f'- {project}[{esc(title)}]({p["url"]}) · <sub>{"merged" if p["merged"] else "open"}</sub>'
+    value = why(p)
+    return f"{line}<br>\n  {esc(value)}" if value else line
+
+
+def cell(text):
+    return esc(text).replace("|", "\\|")
+
+
+def work_sections():
+    """The README's summary, area table, latest merges and full list. Same size at 15 PRs or 150."""
+    sm = summary()
+    kinds = " · ".join(f"{k} {n}" for k, n in sm["kinds"])
+    lead = (f"{len(oss)} pull requests to {len(sm['projects'])} projects ({kinds}). "
+            f"{sm['tested']} of {len(sm['code_fixes'])} code fixes shipped with tests.")
+    table = "\n".join(
+        f"| {cell(project)} · **{cell(area)}** | {len(items)} ({sum(p['merged'] for p in items)} merged) "
+        f"| {cell(', '.join(lang for lang, _ in language_share(items)[:3]))} "
+        f"| [#{items[0]['number']}]({items[0]['url']}) {cell(why(items[0]))} |"
+        for (project, area), items in sm["areas"])
+    merged = [p for p in oss if p["merged"]][:5]
+    grouped = "\n\n".join(f"**{esc(name)}** · {len(items)}\n\n" + "\n".join(pr_line(p) for p in items)
+                          for name, items in sm["projects"])
+    return f"""{lead}
+
+### Where the work went
+
+| Area | Pull requests | Languages | Latest change |
+|---|---|---|---|
+{table}
+
+### Recently merged
+
+{chr(10).join(pr_line(p, True) for p in merged)}
+
+<details>
+<summary>All {len(oss)} pull requests, each with what it does</summary>
+<br>
+
+{grouped}
+
+</details>"""
+
+
 def readme():
-    prs_list = []
-    for p in oss:
-        repo = p["repository"]["nameWithOwner"]
-        title = p["title"].split(": ", 1)[-1]
-        state = "merged" if p["merged"] else "open"
-        line = f'- **{esc(PROJECT_NAMES.get(repo, repo))}** · [{esc(title)}]({p["url"]}) · <sub>{state}</sub>'
-        why = PLAIN.get(p["url"]) or impact(p.get("body"))
-        prs_list.append(f"{line}<br>\n  {esc(why)}" if why else line)
     team_rows = "\n".join(f'| {esc(p["repository"]["nameWithOwner"])} | [{esc(p["title"])}]({p["url"]}) | {"Merged" if p["merged"] else p["state"].title()} |' for p in team)
     merged_oss = next((p for p in reversed(oss) if p["merged"]), None)  # oss is newest first; this line is about the first merge
     restore = next((p for p in oss if "restore" in p["title"].lower()), None)
@@ -303,9 +467,7 @@ Working professional, contributing to open source.
 
 <img src="assets/receipt.svg" alt="Paper receipt floating in space: {len(oss)} pull requests, {oss_merged} merged, {oss_open} open, plus {added} and minus {removed} lines." width="100%">
 
-Each line says what the change does for the people who use the project.
-
-{chr(10).join(prs_list)}
+{work_sections()}
 
 <details>
 <summary>What happened to the merged theme?</summary>
