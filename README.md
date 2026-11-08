@@ -6,17 +6,17 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 16 pull requests, 10 merged, 6 open, plus 1128 and minus 254 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 17 pull requests, 10 merged, 7 open, plus 1272 and minus 254 lines." width="100%">
 
-16 pull requests to 3 projects (Bug fixes 11 · Docs 3 · Cleanup 1 · Features 1). 10 of 10 code fixes shipped with tests.
+17 pull requests to 3 projects (Bug fixes 11 · Docs 3 · Tests 1 · Cleanup 1 · Features 1). 10 of 10 code fixes shipped with tests.
 
 ### Where the work went
 
 | Area | Pull requests | Languages | Latest change |
 |---|---|---|---|
+| AMD Gaia · **Agent UI** | 3 (1 merged) | TypeScript, CSS | [#6976](https://github.com/amd/gaia/pull/6976) The Agent UI now has a test that fails if a button&#x27;s request goes out without the `x-gaia-ui` header. |
 | AMD Gaia · **Agent UI backend** | 3 (2 merged) | Python | [#6972](https://github.com/amd/gaia/pull/6972) When the default chat model is a cloud model GAIA learns about at runtime, such as `opencode.*`, Settings no longer treats it as a local model. |
 | AMD Gaia · **Docs** | 3 (3 merged) | Markdown | [#6864](https://github.com/amd/gaia/pull/6864) Corrects the memory guide&#x27;s category count from six to nine and adds the three missing categories: `profile`, `system` and `permission`. |
-| AMD Gaia · **Agent UI** | 2 (1 merged) | TypeScript, CSS | [#6973](https://github.com/amd/gaia/pull/6973) In the desktop app, the &quot;chat was created, but…&quot; error can now be selected and copied, and it no longer sits under the Windows window buttons. |
 | KanaDojo · **Community themes** | 2 (1 merged) | JSON | [#33693](https://github.com/lingdojo/kana-dojo/pull/33693) Brings back five community themes that two later merges had accidentally deleted. |
 | AMD Gaia · **Agents and installs** | 1 (1 merged) | Python | [#6928](https://github.com/amd/gaia/pull/6928) `gaia agent status` now shows the installed version of an agent installed with `pip`. |
 | AMD Gaia · **Code search** | 1 (0 merged) | Python, Markdown | [#6975](https://github.com/amd/gaia/pull/6975) With Lemonade down or the embedding model name wrong, code indexing now fails on its first call and says what to do. |
@@ -39,11 +39,13 @@ Working professional, contributing to open source.
   Answers about a file attached with the + button now cite the file&#x27;s own name instead of GAIA&#x27;s internal upload ID: `According to kestrel-plan.pdf, page 1:` rather than `According to f27f4885-cec8-4161-9dbd-ebc8a3c25005.pdf, page 1:`.
 
 <details>
-<summary>All 16 pull requests, each with what it does</summary>
+<summary>All 17 pull requests, each with what it does</summary>
 <br>
 
-**AMD Gaia** · 13
+**AMD Gaia** · 14
 
+- [check every mutating request carries x-gaia-ui](https://github.com/amd/gaia/pull/6976) · <sub>open</sub><br>
+  The Agent UI now has a test that fails if a button&#x27;s request goes out without the `x-gaia-ui` header.
 - [one embeddings call per batch, fail on the first error](https://github.com/amd/gaia/pull/6975) · <sub>open</sub><br>
   With Lemonade down or the embedding model name wrong, code indexing now fails on its first call and says what to do.
 - [keep the chat-create error clear of the desktop title bar](https://github.com/amd/gaia/pull/6973) · <sub>open</sub><br>
