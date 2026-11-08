@@ -77,7 +77,15 @@ STYLE = """<style>
 @keyframes sp{to{transform:rotate(360deg)}}
 .bob{animation:bob 11s ease-in-out infinite alternate}
 @keyframes bob{from{transform:translateY(-5px)}to{transform:translateY(5px)}}
-@media (prefers-reduced-motion:reduce){.tw,.sp,.bob{animation:none}}
+.draw{stroke-dasharray:var(--l);stroke-dashoffset:var(--l);animation:draw 1.1s ease-out forwards;animation-delay:var(--o)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.rise{opacity:0;animation:rise .9s ease-out forwards;animation-delay:var(--o)}
+@keyframes rise{to{opacity:1}}
+.pulse{transform-box:fill-box;transform-origin:center;opacity:0;animation:pulse 3.6s ease-out infinite;animation-delay:var(--o)}
+@keyframes pulse{0%{transform:scale(.7);opacity:.5}100%{transform:scale(2.8);opacity:0}}
+.meteor{opacity:0;animation:meteor var(--d) linear infinite;animation-delay:var(--o)}
+@keyframes meteor{0%{transform:translate(0,0);opacity:0}1.5%{opacity:.9}7%{transform:translate(-300px,150px);opacity:0}100%{transform:translate(-300px,150px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.tw,.sp,.bob,.pulse,.meteor{animation:none}.draw{animation:none;stroke-dashoffset:0}.rise{animation:none;opacity:1}}
 </style>"""
 
 
@@ -111,7 +119,7 @@ def star_trails(px, py, seed, count=340, reach=1150):
         x1, y1 = px + r * math.cos(a1), py + r * math.sin(a1)
         col = rng.choice((STAR, STAR, STAR, "#BFD4FF", "#FFD9B0"))
         arcs.append(f'<path d="M{x0:.0f},{y0:.0f} A{r:.0f},{r:.0f} 0 0,1 {x1:.0f},{y1:.0f}" stroke="{col}" stroke-opacity="{rng.uniform(.28, .95):.2f}" stroke-width="{rng.choice((.8, 1, 1.3, 1.7))}"/>')
-    return f'<g class="sp" fill="none" stroke-linecap="round" style="--d:420s;--c:{px}px {py}px">{"".join(arcs)}</g>'
+    return f'<g class="sp" fill="none" stroke-linecap="round" style="--d:170s;--c:{px}px {py}px">{"".join(arcs)}</g>'
 
 
 def cover():
@@ -122,20 +130,30 @@ def cover():
             f'<rect width="{w}" height="{h}" fill="url(#left)"/>')
     text = (f'<text x="72" y="218" font-family="{SERIF}" font-size="80" fill="{STAR}">{NAME}</text>'
             f'<text x="75" y="264" font-family="{SERIF}" font-style="italic" font-size="27" fill="{SOFT}">contributing to open source, one small PR at a time</text>')
+    projects = list(dict.fromkeys(PROJECT_NAMES.get(p["repository"]["nameWithOwner"], p["repository"]["nameWithOwner"]) for p in oss))
+    text += (f'<text x="76" y="306" font-family="{MONO}" font-size="16" fill="{SOFT}">'
+             f'{oss_merged} merged · {oss_open} open · {esc(", ".join(projects))}</text>')
     points = [(792, 96), (926, 58), (1032, 158), (884, 246), (1006, 338)]
     rows = oss[:5]
     pts = points[:len(rows)]
-    lines = "".join(f'<path d="M{a[0]},{a[1]} L{b[0]},{b[1]}" stroke="{STAR}" stroke-opacity=".5" stroke-width="1"/>' for a, b in zip(pts, pts[1:]))
+    lines = "".join(
+        f'<path class="draw" style="--l:{math.dist(a, b):.0f};--o:{.6 + i * .7:.1f}s" d="M{a[0]},{a[1]} L{b[0]},{b[1]}" stroke="{STAR}" stroke-opacity=".5" stroke-width="1"/>'
+        for i, (a, b) in enumerate(zip(pts, pts[1:])))
     stars = []
-    for (x, y), p in zip(pts, rows):
+    for i, ((x, y), p) in enumerate(zip(pts, rows)):
         col = MERGED if p["merged"] else STAR
         repo = p["repository"]["nameWithOwner"].split("/")[1]
-        stars.append(f'<circle cx="{x}" cy="{y}" r="11" fill="{col}" opacity=".16"/><circle class="tw" style="--d:{5 + (p["number"] % 4)}s;--o:-{p["number"] % 5}s" cx="{x}" cy="{y}" r="5.5" fill="{col}"/>'
+        ring = (f'<circle class="pulse" style="--o:{2 + i * .9:.1f}s" cx="{x}" cy="{y}" r="9" fill="none" stroke="{MERGED}" stroke-width="1.5"/>'
+                if p["merged"] else "")
+        stars.append(f'<g class="rise" style="--o:{.2 + i * .7:.1f}s">{ring}<circle cx="{x}" cy="{y}" r="11" fill="{col}" opacity=".16"/><circle class="tw" style="--d:{5 + (p["number"] % 4)}s;--o:-{p["number"] % 5}s" cx="{x}" cy="{y}" r="5.5" fill="{col}"/>'
                      f'<text x="{x + 17}" y="{y + 1}" font-family="{MONO}" font-size="16" fill="{STAR}">{esc(repo)} #{p["number"]}</text>'
-                     f'<text x="{x + 17}" y="{y + 20}" font-family="{SERIF}" font-style="italic" font-size="15" fill="{col if p["merged"] else SOFT}">{"merged" if p["merged"] else "open"}</text>')
+                     f'<text x="{x + 17}" y="{y + 20}" font-family="{SERIF}" font-style="italic" font-size="15" fill="{col if p["merged"] else SOFT}">{"merged" if p["merged"] else "open"}</text></g>')
+    meteors = "".join(
+        f'<line class="meteor" style="--d:{d}s;--o:{o}s" x1="{x}" y1="{y}" x2="{x + 46}" y2="{y - 23}" stroke="{STAR}" stroke-width="1.3" stroke-linecap="round"/>'
+        for x, y, d, o in ((640, 40, 11, 3), (520, 120, 17, 9)))
     label = f"{NAME}, over a slow star-trail sky. A constellation marks {len(rows)} real pull requests: {oss_open} open and {oss_merged} merged."
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="{esc(label)}">'
-            f'{STYLE}<rect width="{w}" height="{h}" fill="{SPACE}"/>{star_trails(px, py, 41)}{fade}{text}{lines}{"".join(stars)}</svg>')
+            f'{STYLE}<rect width="{w}" height="{h}" fill="{SPACE}"/>{star_trails(px, py, 41)}{fade}{meteors}{text}{lines}{"".join(stars)}</svg>')
 
 
 def receipt():
