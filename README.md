@@ -6,7 +6,7 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 18 pull requests, 15 merged, 3 open, plus 1517 and minus 312 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 18 pull requests, 16 merged, 2 open, plus 1692 and minus 344 lines." width="100%">
 
 18 pull requests to 3 projects (Bug fixes 12 · Docs 3 · Tests 1 · Cleanup 1 · Features 1). 11 of 11 code fixes shipped with tests.
 
@@ -20,7 +20,7 @@ Working professional, contributing to open source.
 | KanaDojo · **Community themes** | 2 (1 merged) | JSON | [#33693](https://github.com/lingdojo/kana-dojo/pull/33693) Brings back five community themes that two later merges had accidentally deleted. |
 | AMD Gaia · **Agents and installs** | 1 (1 merged) | Python | [#6928](https://github.com/amd/gaia/pull/6928) `gaia agent status` now shows the installed version of an agent installed with `pip`. |
 | AMD Gaia · **Code search** | 1 (1 merged) | Python, Markdown | [#6975](https://github.com/amd/gaia/pull/6975) With Lemonade down or the embedding model name wrong, code indexing now fails on its first call and says what to do. |
-| AMD Gaia · **Command line** | 1 (0 merged) | Python, Markdown | [#6991](https://github.com/amd/gaia/pull/6991) `gaia kill --lemonade` now stops the Lemonade Server GAIA actually uses. |
+| AMD Gaia · **Command line** | 1 (1 merged) | Python, Markdown | [#6991](https://github.com/amd/gaia/pull/6991) `gaia kill --lemonade` now stops the Lemonade Server GAIA actually uses. |
 | AMD Gaia · **Model client** | 1 (1 merged) | Python | [#6907](https://github.com/amd/gaia/pull/6907) A cloud model that one part of GAIA has discovered is now recognized as cloud everywhere, from any provider, instead of being treated as if it ran on your PC. |
 | AMD Gaia · **Terminal app** | 1 (1 merged) | Go | [#6971](https://github.com/amd/gaia/pull/6971) When an installed agent&#x27;s install record is corrupt, the TUI now says so instead of dropping the agent without a word. |
 | AMD Gaia · **Website** | 1 (1 merged) | CSS | [#6859](https://github.com/amd/gaia/pull/6859) Removes styling code the GAIA website no longer used, so the site ships less dead CSS. |
@@ -28,6 +28,8 @@ Working professional, contributing to open source.
 
 ### Recently merged
 
+- **AMD Gaia** · [stop the Lemonade Server GAIA uses in gaia kill --lemonade](https://github.com/amd/gaia/pull/6991) · <sub>merged</sub><br>
+  `gaia kill --lemonade` now stops the Lemonade Server GAIA actually uses.
 - **AMD Gaia** · [check every mutating request carries x-gaia-ui](https://github.com/amd/gaia/pull/6976) · <sub>merged</sub><br>
   The Agent UI now has a test that fails if a button&#x27;s request goes out without the `x-gaia-ui` header.
 - **AMD Gaia** · [one embeddings call per batch, fail on the first error](https://github.com/amd/gaia/pull/6975) · <sub>merged</sub><br>
@@ -36,8 +38,6 @@ Working professional, contributing to open source.
   In the desktop app, the &quot;chat was created, but…&quot; error can now be selected and copied, and it no longer sits under the Windows window buttons.
 - **AMD Gaia** · [use the shared cloud catalog for status, preload and local-only](https://github.com/amd/gaia/pull/6972) · <sub>merged</sub><br>
   When the default chat model is a cloud model GAIA learns about at runtime, such as `opencode.*`, Settings no longer treats it as a local model.
-- **AMD Gaia** · [show install records the TUI cannot read](https://github.com/amd/gaia/pull/6971) · <sub>merged</sub><br>
-  When an installed agent&#x27;s install record is corrupt, the TUI now says so instead of dropping the agent without a word.
 
 <details>
 <summary>All 18 pull requests, each with what it does</summary>
@@ -45,7 +45,7 @@ Working professional, contributing to open source.
 
 **AMD Gaia** · 15
 
-- [stop the Lemonade Server GAIA uses in gaia kill --lemonade](https://github.com/amd/gaia/pull/6991) · <sub>open</sub><br>
+- [stop the Lemonade Server GAIA uses in gaia kill --lemonade](https://github.com/amd/gaia/pull/6991) · <sub>merged</sub><br>
   `gaia kill --lemonade` now stops the Lemonade Server GAIA actually uses.
 - [check every mutating request carries x-gaia-ui](https://github.com/amd/gaia/pull/6976) · <sub>merged</sub><br>
   The Agent UI now has a test that fails if a button&#x27;s request goes out without the `x-gaia-ui` header.
@@ -130,4 +130,4 @@ It merged, then a later merge from another PR accidentally removed it along with
 - [ ] First merge at [MinIO](https://github.com/minio/minio-js)
 - [ ] First merged PR in a project with 10k+ stars
 
-<sub>Numbers from the GitHub API, last updated 9 Nov 2026.</sub>
+<sub>Numbers from the GitHub API, last updated 10 Nov 2026.</sub>
