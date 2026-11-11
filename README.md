@@ -2,11 +2,13 @@
 
 Working professional, contributing to open source.
 
-`C++` `JavaScript` `HTML` &nbsp;·&nbsp; 25 public repos &nbsp;·&nbsp; on GitHub since Jan 2022
+`C++` `JavaScript` `Python` &nbsp;·&nbsp; 26 public repos &nbsp;·&nbsp; on GitHub since Jan 2022
 
 ## Receipts
 
 <img src="assets/receipt.svg" alt="Paper receipt floating in space: 23 pull requests, 19 merged, 4 open, plus 3558 and minus 483 lines." width="100%">
+
+<sub>This page rebuilds itself from the GitHub API every day. [Make your own with orbit-profile](https://github.com/ityashag/orbit-profile).</sub>
 
 23 pull requests to 3 projects (Bug fixes 17 · Docs 3 · Tests 1 · Cleanup 1 · Features 1). 16 of 16 code fixes shipped with tests.
 
