@@ -6,11 +6,11 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 23 pull requests, 19 merged, 4 open, plus 3558 and minus 483 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 25 pull requests, 19 merged, 6 open, plus 3838 and minus 562 lines." width="100%">
 
 <sub>This page rebuilds itself from the GitHub API every day. [Make your own with orbit-profile](https://github.com/ityashag/orbit-profile).</sub>
 
-23 pull requests to 3 projects (Bug fixes 17 · Docs 3 · Tests 1 · Cleanup 1 · Features 1). 16 of 16 code fixes shipped with tests.
+25 pull requests to 4 projects (Bug fixes 18 · Docs 3 · Other 1 · Tests 1 · Cleanup 1 · Features 1). 17 of 17 code fixes shipped with tests.
 
 ### Where the work went
 
@@ -28,7 +28,9 @@ Working professional, contributing to open source.
 | AMD Gaia · **Model client** | 1 (1 merged) | Python | [#6907](https://github.com/amd/gaia/pull/6907) A cloud model that one part of GAIA has discovered is now recognized as cloud everywhere, from any provider, instead of being treated as if it ran on your PC. |
 | AMD Gaia · **Terminal app** | 1 (1 merged) | Go | [#6971](https://github.com/amd/gaia/pull/6971) When an installed agent&#x27;s install record is corrupt, the TUI now says so instead of dropping the agent without a word. |
 | AMD Gaia · **Website** | 1 (1 merged) | CSS | [#6859](https://github.com/amd/gaia/pull/6859) Removes styling code the GAIA website no longer used, so the site ships less dead CSS. |
+| AMD Gaia · **src** | 1 (0 merged) | Python | [#7163](https://github.com/amd/gaia/pull/7163) When Launchpad&#x27;s API stops answering, the Linux CLI check now says so. |
 | MinIO JS · **AWS credentials** | 1 (0 merged) | JavaScript, TypeScript | [#1516](https://github.com/minio/minio-js/pull/1516) Lets the MinIO JavaScript client sign in with AWS credentials on EC2 and in containers, which failed because it read the wrong field name. |
+| jenkinsci/jenkins · **core** | 1 (0 merged) |  | [#27735](https://github.com/jenkinsci/jenkins/pull/27735) In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes. |
 
 ### Recently merged
 
@@ -44,11 +46,13 @@ Working professional, contributing to open source.
   The Agent UI now has a test that fails if a button&#x27;s request goes out without the `x-gaia-ui` header.
 
 <details>
-<summary>All 23 pull requests, each with what it does</summary>
+<summary>All 25 pull requests, each with what it does</summary>
 <br>
 
-**AMD Gaia** · 20
+**AMD Gaia** · 21
 
+- [name a Launchpad API timeout as an outage](https://github.com/amd/gaia/pull/7163) · <sub>open</sub><br>
+  When Launchpad&#x27;s API stops answering, the Linux CLI check now says so.
 - [stop indexing on a broken vision model and name it](https://github.com/amd/gaia/pull/7154) · <sub>open</sub><br>
   A vision model that is installed but crashing no longer turns a scanned PDF into blank pages.
 - [say when chat and Document Library actions fail](https://github.com/amd/gaia/pull/7153) · <sub>open</sub><br>
@@ -96,6 +100,11 @@ Working professional, contributing to open source.
   Brings back five community themes that two later merges had accidentally deleted.
 - [add new Tsuyu Drizzle theme](https://github.com/lingdojo/kana-dojo/pull/33690) · <sub>merged</sub><br>
   Adds the &quot;Tsuyu Drizzle&quot; color theme to `community/content/community-themes.json`, using the values from the issue.
+
+**jenkinsci/jenkins** · 1
+
+- [Show values and apostrophes in translated messages](https://github.com/jenkinsci/jenkins/pull/27735) · <sub>open</sub><br>
+  In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes.
 
 **MinIO JS** · 1
 
