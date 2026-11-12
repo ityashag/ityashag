@@ -6,21 +6,21 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 25 pull requests, 19 merged, 6 open, plus 3838 and minus 562 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 26 pull requests, 22 merged, 4 open, plus 3862 and minus 569 lines." width="100%">
 
 <sub>This page rebuilds itself from the GitHub API every day. [Make your own with orbit-profile](https://github.com/ityashag/orbit-profile).</sub>
 
-25 pull requests to 4 projects (Bug fixes 18 · Docs 3 · Other 1 · Tests 1 · Cleanup 1 · Features 1). 17 of 17 code fixes shipped with tests.
+26 pull requests to 4 projects (Bug fixes 18 · Docs 3 · Other 2 · Tests 1 · Cleanup 1 · Features 1). 17 of 17 code fixes shipped with tests.
 
 ### Where the work went
 
 | Area | Pull requests | Languages | Latest change |
 |---|---|---|---|
-| AMD Gaia · **Agent UI** | 4 (3 merged) | TypeScript, CSS, JSON | [#7153](https://github.com/amd/gaia/pull/7153) Renaming a chat, toggling private mode, dropping files on a chat, removing a document from a chat, and removing, cancelling or opening a folder in the Document Library now say so when they fail. |
+| AMD Gaia · **Agent UI** | 4 (4 merged) | TypeScript, CSS, JSON | [#7153](https://github.com/amd/gaia/pull/7153) Renaming a chat, toggling private mode, dropping files on a chat, removing a document from a chat, and removing, cancelling or opening a folder in the Document Library now say so when they fail. |
 | AMD Gaia · **Agent UI backend** | 3 (3 merged) | Python | [#6972](https://github.com/amd/gaia/pull/6972) When the default chat model is a cloud model GAIA learns about at runtime, such as `opencode.*`, Settings no longer treats it as a local model. |
 | AMD Gaia · **Docs** | 3 (3 merged) | Markdown | [#6864](https://github.com/amd/gaia/pull/6864) Corrects the memory guide&#x27;s category count from six to nine and adds the three missing categories: `profile`, `system` and `permission`. |
 | AMD Gaia · **Command line** | 2 (2 merged) | Python, Markdown | [#7132](https://github.com/amd/gaia/pull/7132) `gaia cache status` now lists every cache GAIA keeps under `~/.gaia/cache`, each with its size and file count, largest first. |
-| AMD Gaia · **Document Q&amp;A** | 2 (1 merged) | Python, Markdown | [#7154](https://github.com/amd/gaia/pull/7154) A vision model that is installed but crashing no longer turns a scanned PDF into blank pages. |
+| AMD Gaia · **Document Q&amp;A** | 2 (2 merged) | Python, Markdown | [#7154](https://github.com/amd/gaia/pull/7154) A vision model that is installed but crashing no longer turns a scanned PDF into blank pages. |
 | KanaDojo · **Community themes** | 2 (1 merged) | JSON | [#33693](https://github.com/lingdojo/kana-dojo/pull/33693) Brings back five community themes that two later merges had accidentally deleted. |
 | AMD Gaia · **Agent tools** | 1 (1 merged) | Python, Markdown | [#7131](https://github.com/amd/gaia/pull/7131) A document indexed twice under different names no longer fills the model&#x27;s context with copies of itself. |
 | AMD Gaia · **Agents and installs** | 1 (1 merged) | Python | [#6928](https://github.com/amd/gaia/pull/6928) `gaia agent status` now shows the installed version of an agent installed with `pip`. |
@@ -28,34 +28,35 @@ Working professional, contributing to open source.
 | AMD Gaia · **Model client** | 1 (1 merged) | Python | [#6907](https://github.com/amd/gaia/pull/6907) A cloud model that one part of GAIA has discovered is now recognized as cloud everywhere, from any provider, instead of being treated as if it ran on your PC. |
 | AMD Gaia · **Terminal app** | 1 (1 merged) | Go | [#6971](https://github.com/amd/gaia/pull/6971) When an installed agent&#x27;s install record is corrupt, the TUI now says so instead of dropping the agent without a word. |
 | AMD Gaia · **Website** | 1 (1 merged) | CSS | [#6859](https://github.com/amd/gaia/pull/6859) Removes styling code the GAIA website no longer used, so the site ships less dead CSS. |
-| AMD Gaia · **src** | 1 (0 merged) | Python | [#7163](https://github.com/amd/gaia/pull/7163) When Launchpad&#x27;s API stops answering, the Linux CLI check now says so. |
+| AMD Gaia · **src** | 1 (1 merged) | Python | [#7163](https://github.com/amd/gaia/pull/7163) When Launchpad&#x27;s API stops answering, the Linux CLI check now says so. |
+| Jenkins · **core** | 1 (0 merged) |  | [#27735](https://github.com/jenkinsci/jenkins/pull/27735) In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes. |
+| Jenkins · **src** | 1 (0 merged) |  | [#27739](https://github.com/jenkinsci/jenkins/pull/27739)  |
 | MinIO JS · **AWS credentials** | 1 (0 merged) | JavaScript, TypeScript | [#1516](https://github.com/minio/minio-js/pull/1516) Lets the MinIO JavaScript client sign in with AWS credentials on EC2 and in containers, which failed because it read the wrong field name. |
-| jenkinsci/jenkins · **core** | 1 (0 merged) |  | [#27735](https://github.com/jenkinsci/jenkins/pull/27735) In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes. |
 
 ### Recently merged
 
+- **AMD Gaia** · [name a Launchpad API timeout as an outage](https://github.com/amd/gaia/pull/7163) · <sub>merged</sub><br>
+  When Launchpad&#x27;s API stops answering, the Linux CLI check now says so.
+- **AMD Gaia** · [stop indexing on a broken vision model and name it](https://github.com/amd/gaia/pull/7154) · <sub>merged</sub><br>
+  A vision model that is installed but crashing no longer turns a scanned PDF into blank pages.
+- **AMD Gaia** · [say when chat and Document Library actions fail](https://github.com/amd/gaia/pull/7153) · <sub>merged</sub><br>
+  Renaming a chat, toggling private mode, dropping files on a chat, removing a document from a chat, and removing, cancelling or opening a folder in the Document Library now say so when they fail.
 - **AMD Gaia** · [read images left unread while the vision model was down](https://github.com/amd/gaia/pull/7133) · <sub>merged</sub><br>
   A PDF or PowerPoint indexed while the vision model was down no longer keeps its images unsearchable for good.
 - **AMD Gaia** · [show every cache folder and its size in gaia cache status](https://github.com/amd/gaia/pull/7132) · <sub>merged</sub><br>
   `gaia cache status` now lists every cache GAIA keeps under `~/.gaia/cache`, each with its size and file count, largest first.
-- **AMD Gaia** · [count identical chunks once in a search and cite every copy](https://github.com/amd/gaia/pull/7131) · <sub>merged</sub><br>
-  A document indexed twice under different names no longer fills the model&#x27;s context with copies of itself.
-- **AMD Gaia** · [stop the Lemonade Server GAIA uses in gaia kill --lemonade](https://github.com/amd/gaia/pull/6991) · <sub>merged</sub><br>
-  `gaia kill --lemonade` now stops the Lemonade Server GAIA actually uses.
-- **AMD Gaia** · [check every mutating request carries x-gaia-ui](https://github.com/amd/gaia/pull/6976) · <sub>merged</sub><br>
-  The Agent UI now has a test that fails if a button&#x27;s request goes out without the `x-gaia-ui` header.
 
 <details>
-<summary>All 25 pull requests, each with what it does</summary>
+<summary>All 26 pull requests, each with what it does</summary>
 <br>
 
 **AMD Gaia** · 21
 
-- [name a Launchpad API timeout as an outage](https://github.com/amd/gaia/pull/7163) · <sub>open</sub><br>
+- [name a Launchpad API timeout as an outage](https://github.com/amd/gaia/pull/7163) · <sub>merged</sub><br>
   When Launchpad&#x27;s API stops answering, the Linux CLI check now says so.
-- [stop indexing on a broken vision model and name it](https://github.com/amd/gaia/pull/7154) · <sub>open</sub><br>
+- [stop indexing on a broken vision model and name it](https://github.com/amd/gaia/pull/7154) · <sub>merged</sub><br>
   A vision model that is installed but crashing no longer turns a scanned PDF into blank pages.
-- [say when chat and Document Library actions fail](https://github.com/amd/gaia/pull/7153) · <sub>open</sub><br>
+- [say when chat and Document Library actions fail](https://github.com/amd/gaia/pull/7153) · <sub>merged</sub><br>
   Renaming a chat, toggling private mode, dropping files on a chat, removing a document from a chat, and removing, cancelling or opening a folder in the Document Library now say so when they fail.
 - [read images left unread while the vision model was down](https://github.com/amd/gaia/pull/7133) · <sub>merged</sub><br>
   A PDF or PowerPoint indexed while the vision model was down no longer keeps its images unsearchable for good.
@@ -94,17 +95,18 @@ Working professional, contributing to open source.
 - [remove nvm alias step from the Windows tab](https://github.com/amd/gaia/pull/6852) · <sub>merged</sub><br>
   Removes the `nvm alias default 20.20.0` step from the Windows tab of the setup guide, because NVM for Windows has no `alias` command.
 
+**Jenkins** · 2
+
+- [[JENKINS-69347] Prevent enabling a plugin whose dependency is disabled](https://github.com/jenkinsci/jenkins/pull/27739) · <sub>open</sub>
+- [Show values and apostrophes in translated messages](https://github.com/jenkinsci/jenkins/pull/27735) · <sub>open</sub><br>
+  In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes.
+
 **KanaDojo** · 2
 
 - [restore themes removed from community-themes.json](https://github.com/lingdojo/kana-dojo/pull/33693) · <sub>open</sub><br>
   Brings back five community themes that two later merges had accidentally deleted.
 - [add new Tsuyu Drizzle theme](https://github.com/lingdojo/kana-dojo/pull/33690) · <sub>merged</sub><br>
   Adds the &quot;Tsuyu Drizzle&quot; color theme to `community/content/community-themes.json`, using the values from the issue.
-
-**jenkinsci/jenkins** · 1
-
-- [Show values and apostrophes in translated messages](https://github.com/jenkinsci/jenkins/pull/27735) · <sub>open</sub><br>
-  In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes.
 
 **MinIO JS** · 1
 
@@ -153,4 +155,4 @@ It merged, then a later merge from another PR accidentally removed it along with
 - [ ] First merge at [MinIO](https://github.com/minio/minio-js)
 - [ ] First merged PR in a project with 10k+ stars
 
-<sub>Numbers from the GitHub API, last updated 11 Nov 2026.</sub>
+<sub>Numbers from the GitHub API, last updated 12 Nov 2026.</sub>

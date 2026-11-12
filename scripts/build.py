@@ -21,7 +21,7 @@ ASSETS.mkdir(parents=True, exist_ok=True)
 
 SANS = "ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif"
 MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
-PROJECT_NAMES = {"amd/gaia": "AMD Gaia", "minio/minio-js": "MinIO JS", "lingdojo/kana-dojo": "KanaDojo"}
+PROJECT_NAMES = {"amd/gaia": "AMD Gaia", "minio/minio-js": "MinIO JS", "lingdojo/kana-dojo": "KanaDojo", "jenkinsci/jenkins": "Jenkins"}
 
 
 def gql(query):
@@ -327,13 +327,17 @@ def receipt():
     paper = f'<g class="bob"><g transform="rotate(-1.2 {x0 + rw / 2} {top + paper_h / 2})">{"".join(t)}</g></g>'
 
     # Orrery: one orbit per project, one moon per pull request.
-    cx, cy = 950, 196
+    # The orbits share a fixed width, so more projects pack closer instead of
+    # growing into the receipt, the stats or off the top of the image.
+    outer = 172
+    cx, cy = 950, outer + 44
     groups = {}
     for p in oss:
         groups.setdefault(p["repository"]["nameWithOwner"], []).append(p)
     # The busiest project gets the widest orbit, so its moons have room.
     rings = sorted(groups.items(), key=lambda kv: (len(kv[1]), kv[0]))
-    radii = [58 + i * 46 for i in range(len(rings))]
+    step = min(46, (outer - 52) / max(1, len(rings) - 1))
+    radii = [outer - (len(rings) - 1 - i) * step for i in range(len(rings))]
     # One moon size for every orbit, shrinking only when the widest one fills up.
     widest = max(len(items) for _, items in rings)
     moon = min(6.0, max(2.5, 2 * math.pi * radii[-1] / widest / 3.2))
@@ -348,7 +352,7 @@ def receipt():
         orbit.append(f'<g class="sp" style="--d:{70 + i * 45}s;--c:{cx}px {cy}px">{"".join(moons)}</g>')
         # Above the moons' path, so a passing moon never covers the name.
         orbit.append(f'<text x="{cx}" y="{cy - r - moon - 11:.0f}" text-anchor="middle" font-family="{SERIF}" font-style="italic" font-size="15" fill="{SOFT}" stroke="{SPACE}" stroke-width="4" paint-order="stroke">{esc(PROJECT_NAMES.get(repo, repo))}</text>')
-    kx, ky = cx - radii[-1] - 112, cy - radii[-1] + 24
+    kx, ky = cx + outer + 36, 40
     orbit.append(f'<circle cx="{kx}" cy="{ky - 5}" r="5" fill="{MERGED}"/><text x="{kx + 13}" y="{ky}" font-family="{SERIF}" font-style="italic" font-size="14" fill="{SOFT}">merged</text>'
                  f'<circle cx="{kx}" cy="{ky + 19}" r="5" fill="{STAR}"/><text x="{kx + 13}" y="{ky + 24}" font-family="{SERIF}" font-style="italic" font-size="14" fill="{SOFT}">open</text>')
     sx = 742
@@ -357,9 +361,11 @@ def receipt():
         return (f'<text x="{sx}" y="{y}" font-family="{SERIF}" font-size="52" fill="{STAR}">{esc(big)}</text>'
                 f'<text x="{sx}" y="{y + 30}" font-family="{SERIF}" font-style="italic" font-size="19" fill="{SOFT}">{esc(small)}</text>')
 
-    stats = (stat(410, f"{len(oss)} pull requests", f"across {len(oss_projects)} projects, {oss_merged} merged so far")
-             + stat(510, f"{stars_combined:,} stars", "on those projects (theirs, not mine)")
-             + stat(610, f"{sm['tested']} of {len(sm['code_fixes'])} fixes", "came with tests of their own"))
+    # Below the widest orbit's moons.
+    sy = cy + outer + 66
+    stats = (stat(sy, f"{len(oss)} pull requests", f"across {len(oss_projects)} projects, {oss_merged} merged so far")
+             + stat(sy + 98, f"{stars_combined:,} stars", "on those projects (theirs, not mine)")
+             + stat(sy + 196, f"{sm['tested']} of {len(sm['code_fixes'])} fixes", "came with tests of their own"))
     label = (f"A paper receipt floating in space summing up {len(oss)} open-source pull requests by project, kind of work, "
              f"area of the code and language: {oss_merged} merged, {oss_open} open. An orrery shows them orbiting {len(oss_projects)} projects.")
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="{esc(label)}">'
