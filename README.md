@@ -2,15 +2,15 @@
 
 Working professional, contributing to open source.
 
-`C++` `JavaScript` `Python` &nbsp;·&nbsp; 26 public repos &nbsp;·&nbsp; on GitHub since Jan 2022
+`C++` `JavaScript` `Python` &nbsp;·&nbsp; 27 public repos &nbsp;·&nbsp; on GitHub since Jan 2022
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 26 pull requests, 22 merged, 4 open, plus 3862 and minus 569 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 28 pull requests, 22 merged, 6 open, plus 4004 and minus 688 lines." width="100%">
 
 <sub>This page rebuilds itself from the GitHub API every day. [Make your own with orbit-profile](https://github.com/ityashag/orbit-profile).</sub>
 
-26 pull requests to 4 projects (Bug fixes 18 · Docs 3 · Other 2 · Tests 1 · Cleanup 1 · Features 1). 17 of 17 code fixes shipped with tests.
+28 pull requests to 5 projects (Bug fixes 19 · Other 3 · Docs 3 · Tests 1 · Cleanup 1 · Features 1). 17 of 17 code fixes shipped with tests.
 
 ### Where the work went
 
@@ -19,9 +19,9 @@ Working professional, contributing to open source.
 | AMD Gaia · **Agent UI** | 4 (4 merged) | TypeScript, CSS, JSON | [#7153](https://github.com/amd/gaia/pull/7153) Renaming a chat, toggling private mode, dropping files on a chat, removing a document from a chat, and removing, cancelling or opening a folder in the Document Library now say so when they fail. |
 | AMD Gaia · **Agent UI backend** | 3 (3 merged) | Python | [#6972](https://github.com/amd/gaia/pull/6972) When the default chat model is a cloud model GAIA learns about at runtime, such as `opencode.*`, Settings no longer treats it as a local model. |
 | AMD Gaia · **Docs** | 3 (3 merged) | Markdown | [#6864](https://github.com/amd/gaia/pull/6864) Corrects the memory guide&#x27;s category count from six to nine and adds the three missing categories: `profile`, `system` and `permission`. |
+| KanaDojo · **Community themes** | 3 (1 merged) | JSON | [#34022](https://github.com/lingdojo/kana-dojo/pull/34022) `community-themes.json` lists some themes more than once: `bamboo-shadow` three times, and `koi-glow`, `matcha-drift` and `sundown-shrine` twice each. |
 | AMD Gaia · **Command line** | 2 (2 merged) | Python, Markdown | [#7132](https://github.com/amd/gaia/pull/7132) `gaia cache status` now lists every cache GAIA keeps under `~/.gaia/cache`, each with its size and file count, largest first. |
 | AMD Gaia · **Document Q&amp;A** | 2 (2 merged) | Python, Markdown | [#7154](https://github.com/amd/gaia/pull/7154) A vision model that is installed but crashing no longer turns a scanned PDF into blank pages. |
-| KanaDojo · **Community themes** | 2 (1 merged) | JSON | [#33693](https://github.com/lingdojo/kana-dojo/pull/33693) Brings back five community themes that two later merges had accidentally deleted. |
 | AMD Gaia · **Agent tools** | 1 (1 merged) | Python, Markdown | [#7131](https://github.com/amd/gaia/pull/7131) A document indexed twice under different names no longer fills the model&#x27;s context with copies of itself. |
 | AMD Gaia · **Agents and installs** | 1 (1 merged) | Python | [#6928](https://github.com/amd/gaia/pull/6928) `gaia agent status` now shows the installed version of an agent installed with `pip`. |
 | AMD Gaia · **Code search** | 1 (1 merged) | Python, Markdown | [#6975](https://github.com/amd/gaia/pull/6975) With Lemonade down or the embedding model name wrong, code indexing now fails on its first call and says what to do. |
@@ -32,6 +32,7 @@ Working professional, contributing to open source.
 | Jenkins · **core** | 1 (0 merged) |  | [#27735](https://github.com/jenkinsci/jenkins/pull/27735) In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes. |
 | Jenkins · **src** | 1 (0 merged) |  | [#27739](https://github.com/jenkinsci/jenkins/pull/27739)  |
 | MinIO JS · **AWS credentials** | 1 (0 merged) | JavaScript, TypeScript | [#1516](https://github.com/minio/minio-js/pull/1516) Lets the MinIO JavaScript client sign in with AWS credentials on EC2 and in containers, which failed because it read the wrong field name. |
+| apache/airflow · **airflow-core** | 1 (0 merged) | Python | [#77011](https://github.com/apache/airflow/pull/77011) A secrets backend&#x27;s kwargs can also be set one key at a time (`AIRFLOWSECRETSBACKEND_KWARG&lt;KEY&gt;`, and the `[workers]` equivalent). |
 
 ### Recently merged
 
@@ -47,7 +48,7 @@ Working professional, contributing to open source.
   `gaia cache status` now lists every cache GAIA keeps under `~/.gaia/cache`, each with its size and file count, largest first.
 
 <details>
-<summary>All 26 pull requests, each with what it does</summary>
+<summary>All 28 pull requests, each with what it does</summary>
 <br>
 
 **AMD Gaia** · 21
@@ -95,18 +96,25 @@ Working professional, contributing to open source.
 - [remove nvm alias step from the Windows tab](https://github.com/amd/gaia/pull/6852) · <sub>merged</sub><br>
   Removes the `nvm alias default 20.20.0` step from the Windows tab of the setup guide, because NVM for Windows has no `alias` command.
 
+**KanaDojo** · 3
+
+- [remove duplicate entries from community-themes.json](https://github.com/lingdojo/kana-dojo/pull/34022) · <sub>open</sub><br>
+  `community-themes.json` lists some themes more than once: `bamboo-shadow` three times, and `koi-glow`, `matcha-drift` and `sundown-shrine` twice each.
+- [restore themes removed from community-themes.json](https://github.com/lingdojo/kana-dojo/pull/33693) · <sub>open</sub><br>
+  Brings back five community themes that two later merges had accidentally deleted.
+- [add new Tsuyu Drizzle theme](https://github.com/lingdojo/kana-dojo/pull/33690) · <sub>merged</sub><br>
+  Adds the &quot;Tsuyu Drizzle&quot; color theme to `community/content/community-themes.json`, using the values from the issue.
+
 **Jenkins** · 2
 
 - [[JENKINS-69347] Prevent enabling a plugin whose dependency is disabled](https://github.com/jenkinsci/jenkins/pull/27739) · <sub>open</sub>
 - [Show values and apostrophes in translated messages](https://github.com/jenkinsci/jenkins/pull/27735) · <sub>open</sub><br>
   In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes.
 
-**KanaDojo** · 2
+**apache/airflow** · 1
 
-- [restore themes removed from community-themes.json](https://github.com/lingdojo/kana-dojo/pull/33693) · <sub>open</sub><br>
-  Brings back five community themes that two later merges had accidentally deleted.
-- [add new Tsuyu Drizzle theme](https://github.com/lingdojo/kana-dojo/pull/33690) · <sub>merged</sub><br>
-  Adds the &quot;Tsuyu Drizzle&quot; color theme to `community/content/community-themes.json`, using the values from the issue.
+- [Hide team scoped per-key secrets backend kwargs in config output](https://github.com/apache/airflow/pull/77011) · <sub>open</sub><br>
+  A secrets backend&#x27;s kwargs can also be set one key at a time (`AIRFLOWSECRETSBACKEND_KWARG&lt;KEY&gt;`, and the `[workers]` equivalent).
 
 **MinIO JS** · 1
 
@@ -155,4 +163,4 @@ It merged, then a later merge from another PR accidentally removed it along with
 - [ ] First merge at [MinIO](https://github.com/minio/minio-js)
 - [ ] First merged PR in a project with 10k+ stars
 
-<sub>Numbers from the GitHub API, last updated 12 Nov 2026.</sub>
+<sub>Numbers from the GitHub API, last updated 13 Nov 2026.</sub>
