@@ -2,15 +2,15 @@
 
 Working professional, contributing to open source.
 
-`C++` `JavaScript` `Python` &nbsp;·&nbsp; 27 public repos &nbsp;·&nbsp; on GitHub since Jan 2022
+`C++` `JavaScript` `Python` &nbsp;·&nbsp; 28 public repos &nbsp;·&nbsp; on GitHub since Jan 2022
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 28 pull requests, 22 merged, 6 open, plus 4004 and minus 688 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 30 pull requests, 22 merged, 8 open, plus 4369 and minus 693 lines." width="100%">
 
 <sub>This page rebuilds itself from the GitHub API every day. [Make your own with orbit-profile](https://github.com/ityashag/orbit-profile).</sub>
 
-28 pull requests to 5 projects (Bug fixes 19 · Other 3 · Docs 3 · Tests 1 · Cleanup 1 · Features 1). 17 of 17 code fixes shipped with tests.
+30 pull requests to 6 projects (Bug fixes 19 · Other 5 · Docs 3 · Tests 1 · Cleanup 1 · Features 1). 17 of 17 code fixes shipped with tests.
 
 ### Where the work went
 
@@ -22,6 +22,7 @@ Working professional, contributing to open source.
 | KanaDojo · **Community themes** | 3 (1 merged) | JSON | [#34022](https://github.com/lingdojo/kana-dojo/pull/34022) `community-themes.json` lists some themes more than once: `bamboo-shadow` three times, and `koi-glow`, `matcha-drift` and `sundown-shrine` twice each. |
 | AMD Gaia · **Command line** | 2 (2 merged) | Python, Markdown | [#7132](https://github.com/amd/gaia/pull/7132) `gaia cache status` now lists every cache GAIA keeps under `~/.gaia/cache`, each with its size and file count, largest first. |
 | AMD Gaia · **Document Q&amp;A** | 2 (2 merged) | Python, Markdown | [#7154](https://github.com/amd/gaia/pull/7154) A vision model that is installed but crashing no longer turns a scanned PDF into blank pages. |
+| gosnmp/gosnmp · **gosnmp/gosnmp** | 2 (0 merged) | Go | [#651](https://github.com/gosnmp/gosnmp/pull/651) Fixes #646 (item 4 of #601). |
 | AMD Gaia · **Agent tools** | 1 (1 merged) | Python, Markdown | [#7131](https://github.com/amd/gaia/pull/7131) A document indexed twice under different names no longer fills the model&#x27;s context with copies of itself. |
 | AMD Gaia · **Agents and installs** | 1 (1 merged) | Python | [#6928](https://github.com/amd/gaia/pull/6928) `gaia agent status` now shows the installed version of an agent installed with `pip`. |
 | AMD Gaia · **Code search** | 1 (1 merged) | Python, Markdown | [#6975](https://github.com/amd/gaia/pull/6975) With Lemonade down or the embedding model name wrong, code indexing now fails on its first call and says what to do. |
@@ -48,7 +49,7 @@ Working professional, contributing to open source.
   `gaia cache status` now lists every cache GAIA keeps under `~/.gaia/cache`, each with its size and file count, largest first.
 
 <details>
-<summary>All 28 pull requests, each with what it does</summary>
+<summary>All 30 pull requests, each with what it does</summary>
 <br>
 
 **AMD Gaia** · 21
@@ -104,6 +105,13 @@ Working professional, contributing to open source.
   Brings back five community themes that two later merges had accidentally deleted.
 - [add new Tsuyu Drizzle theme](https://github.com/lingdojo/kana-dojo/pull/33690) · <sub>merged</sub><br>
   Adds the &quot;Tsuyu Drizzle&quot; color theme to `community/content/community-themes.json`, using the values from the issue.
+
+**gosnmp/gosnmp** · 2
+
+- [keep an established v3 authoritative engine ID](https://github.com/gosnmp/gosnmp/pull/651) · <sub>open</sub><br>
+  Fixes #646 (item 4 of #601).
+- [take the incoming v3 security level from the received msgFlags](https://github.com/gosnmp/gosnmp/pull/650) · <sub>open</sub><br>
+  Fixes #643 (item 1 of #601).
 
 **Jenkins** · 2
 
