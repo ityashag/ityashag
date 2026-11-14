@@ -6,7 +6,7 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 30 pull requests, 22 merged, 8 open, plus 4369 and minus 693 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 30 pull requests, 23 merged, 6 open, plus 4369 and minus 693 lines." width="100%">
 
 <sub>This page rebuilds itself from the GitHub API every day. [Make your own with orbit-profile](https://github.com/ityashag/orbit-profile).</sub>
 
@@ -30,7 +30,7 @@ Working professional, contributing to open source.
 | AMD Gaia · **Terminal app** | 1 (1 merged) | Go | [#6971](https://github.com/amd/gaia/pull/6971) When an installed agent&#x27;s install record is corrupt, the TUI now says so instead of dropping the agent without a word. |
 | AMD Gaia · **Website** | 1 (1 merged) | CSS | [#6859](https://github.com/amd/gaia/pull/6859) Removes styling code the GAIA website no longer used, so the site ships less dead CSS. |
 | AMD Gaia · **src** | 1 (1 merged) | Python | [#7163](https://github.com/amd/gaia/pull/7163) When Launchpad&#x27;s API stops answering, the Linux CLI check now says so. |
-| Jenkins · **core** | 1 (0 merged) |  | [#27735](https://github.com/jenkinsci/jenkins/pull/27735) In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes. |
+| Jenkins · **core** | 1 (1 merged) |  | [#27735](https://github.com/jenkinsci/jenkins/pull/27735) In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes. |
 | Jenkins · **src** | 1 (0 merged) |  | [#27739](https://github.com/jenkinsci/jenkins/pull/27739)  |
 | MinIO JS · **AWS credentials** | 1 (0 merged) | JavaScript, TypeScript | [#1516](https://github.com/minio/minio-js/pull/1516) Lets the MinIO JavaScript client sign in with AWS credentials on EC2 and in containers, which failed because it read the wrong field name. |
 | apache/airflow · **airflow-core** | 1 (0 merged) | Python | [#77011](https://github.com/apache/airflow/pull/77011) A secrets backend&#x27;s kwargs can also be set one key at a time (`AIRFLOWSECRETSBACKEND_KWARG&lt;KEY&gt;`, and the `[workers]` equivalent). |
@@ -39,14 +39,14 @@ Working professional, contributing to open source.
 
 - **AMD Gaia** · [name a Launchpad API timeout as an outage](https://github.com/amd/gaia/pull/7163) · <sub>merged</sub><br>
   When Launchpad&#x27;s API stops answering, the Linux CLI check now says so.
+- **Jenkins** · [Show values and apostrophes in translated messages](https://github.com/jenkinsci/jenkins/pull/27735) · <sub>merged</sub><br>
+  In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes.
 - **AMD Gaia** · [stop indexing on a broken vision model and name it](https://github.com/amd/gaia/pull/7154) · <sub>merged</sub><br>
   A vision model that is installed but crashing no longer turns a scanned PDF into blank pages.
 - **AMD Gaia** · [say when chat and Document Library actions fail](https://github.com/amd/gaia/pull/7153) · <sub>merged</sub><br>
   Renaming a chat, toggling private mode, dropping files on a chat, removing a document from a chat, and removing, cancelling or opening a folder in the Document Library now say so when they fail.
 - **AMD Gaia** · [read images left unread while the vision model was down](https://github.com/amd/gaia/pull/7133) · <sub>merged</sub><br>
   A PDF or PowerPoint indexed while the vision model was down no longer keeps its images unsearchable for good.
-- **AMD Gaia** · [show every cache folder and its size in gaia cache status](https://github.com/amd/gaia/pull/7132) · <sub>merged</sub><br>
-  `gaia cache status` now lists every cache GAIA keeps under `~/.gaia/cache`, each with its size and file count, largest first.
 
 <details>
 <summary>All 30 pull requests, each with what it does</summary>
@@ -116,7 +116,7 @@ Working professional, contributing to open source.
 **Jenkins** · 2
 
 - [[JENKINS-69347] Prevent enabling a plugin whose dependency is disabled](https://github.com/jenkinsci/jenkins/pull/27739) · <sub>open</sub>
-- [Show values and apostrophes in translated messages](https://github.com/jenkinsci/jenkins/pull/27735) · <sub>open</sub><br>
+- [Show values and apostrophes in translated messages](https://github.com/jenkinsci/jenkins/pull/27735) · <sub>merged</sub><br>
   In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes.
 
 **apache/airflow** · 1
@@ -169,6 +169,6 @@ It merged, then a later merge from another PR accidentally removed it along with
 - [x] Spotted a merge that wiped 5 themes from KanaDojo and [opened the fix](https://github.com/lingdojo/kana-dojo/pull/33693)
 - [x] First merge at [AMD Gaia](https://github.com/amd/gaia)
 - [ ] First merge at [MinIO](https://github.com/minio/minio-js)
-- [ ] First merged PR in a project with 10k+ stars
+- [x] First merged PR in a project with 10k+ stars
 
-<sub>Numbers from the GitHub API, last updated 13 Nov 2026.</sub>
+<sub>Numbers from the GitHub API, last updated 14 Nov 2026.</sub>
