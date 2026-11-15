@@ -6,18 +6,18 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 34 pull requests, 24 merged, 9 open, plus 5558 and minus 753 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 35 pull requests, 26 merged, 8 open, plus 6078 and minus 759 lines." width="100%">
 
 <sub>This page rebuilds itself from the GitHub API every day. [Make your own with orbit-profile](https://github.com/ityashag/orbit-profile).</sub>
 
-34 pull requests to 6 projects (Bug fixes 27 · Docs 3 · Security fixes 1 · Tests 1 · Cleanup 1 · Features 1). 26 of 26 code fixes shipped with tests.
+35 pull requests to 6 projects (Bug fixes 27 · Docs 3 · Other 1 · Security fixes 1 · Tests 1 · Cleanup 1 · Features 1). 26 of 26 code fixes shipped with tests.
 
 ### Where the work went
 
 | Project | Merged | Open | Where in the code |
 |:--|--:|--:|:--|
-| [AMD Gaia](https://github.com/amd/gaia) | 22 | 2 | Agent UI 4 · Agent UI backend 3 · Docs 3 · Agents and installs 2 · Command line 2 · +8 more |
-| [gosnmp](https://github.com/gosnmp/gosnmp) | 0 | 3 | SNMPv3 3 |
+| [AMD Gaia](https://github.com/amd/gaia) | 24 | 0 | Agent UI 4 · Agent UI backend 3 · Docs 3 · Agents and installs 2 · Command line 2 · +8 more |
+| [gosnmp](https://github.com/gosnmp/gosnmp) | 0 | 4 | SNMPv3 4 |
 | [KanaDojo](https://github.com/lingdojo/kana-dojo) | 1 | 1 | Community themes 3 |
 | [Jenkins](https://github.com/jenkinsci/jenkins) | 1 | 1 | Plugin manager 1 · Translations 1 |
 | [Apache Airflow](https://github.com/apache/airflow) | 0 | 1 | Configuration 1 |
@@ -25,25 +25,25 @@ Working professional, contributing to open source.
 
 ### Recently merged
 
+- **AMD Gaia** · [name GAIA&#x27;s chat model in the status line on a shared Lemonade](https://github.com/amd/gaia/pull/8224) · <sub>merged</sub><br>
+  The TUI status line (`gaia-tui status`, the Local row in the model picker) now names the model GAIA chats with, not whichever model Lemonade loaded last, on a Lemonade shared with other apps.
+- **AMD Gaia** · [mark a goal stalled after 10 check-backs in a row](https://github.com/amd/gaia/pull/8223) · <sub>merged</sub><br>
+  A background goal that only ever asks to check back later is now marked stalled after 10 check-backs in a row, with the agent&#x27;s last reason, instead of running until the hourly cap.
 - **AMD Gaia** · [map Unicode look-alikes when neutralizing fence-marker names](https://github.com/amd/gaia/pull/8215) · <sub>merged</sub>
 - **AMD Gaia** · [name a Launchpad API timeout as an outage](https://github.com/amd/gaia/pull/7163) · <sub>merged</sub><br>
   When Launchpad&#x27;s API stops answering, the Linux CLI check now says so.
 - **Jenkins** · [Show values and apostrophes in translated messages](https://github.com/jenkinsci/jenkins/pull/27735) · <sub>merged</sub><br>
   In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes.
-- **AMD Gaia** · [stop indexing on a broken vision model and name it](https://github.com/amd/gaia/pull/7154) · <sub>merged</sub><br>
-  A vision model that is installed but crashing no longer turns a scanned PDF into blank pages.
-- **AMD Gaia** · [say when chat and Document Library actions fail](https://github.com/amd/gaia/pull/7153) · <sub>merged</sub><br>
-  Renaming a chat, toggling private mode, dropping files on a chat, removing a document from a chat, and removing, cancelling or opening a folder in the Document Library now say so when they fail.
 
 <details>
-<summary>All 34 pull requests, each with what it does</summary>
+<summary>All 35 pull requests, each with what it does</summary>
 <br>
 
 **AMD Gaia** · 24
 
-- [name GAIA&#x27;s chat model in the status line on a shared Lemonade](https://github.com/amd/gaia/pull/8224) · <sub>open</sub><br>
+- [name GAIA&#x27;s chat model in the status line on a shared Lemonade](https://github.com/amd/gaia/pull/8224) · <sub>merged</sub><br>
   The TUI status line (`gaia-tui status`, the Local row in the model picker) now names the model GAIA chats with, not whichever model Lemonade loaded last, on a Lemonade shared with other apps.
-- [mark a goal stalled after 10 check-backs in a row](https://github.com/amd/gaia/pull/8223) · <sub>open</sub><br>
+- [mark a goal stalled after 10 check-backs in a row](https://github.com/amd/gaia/pull/8223) · <sub>merged</sub><br>
   A background goal that only ever asks to check back later is now marked stalled after 10 check-backs in a row, with the agent&#x27;s last reason, instead of running until the hourly cap.
 - [map Unicode look-alikes when neutralizing fence-marker names](https://github.com/amd/gaia/pull/8215) · <sub>merged</sub>
 - [name a Launchpad API timeout as an outage](https://github.com/amd/gaia/pull/7163) · <sub>merged</sub><br>
@@ -89,8 +89,10 @@ Working professional, contributing to open source.
 - [remove nvm alias step from the Windows tab](https://github.com/amd/gaia/pull/6852) · <sub>merged</sub><br>
   Removes the `nvm alias default 20.20.0` step from the Windows tab of the setup guide, because NVM for Windows has no `alias` command.
 
-**gosnmp** · 3
+**gosnmp** · 4
 
+- [track v3 engine boots and time as a non-authoritative engine](https://github.com/gosnmp/gosnmp/pull/653) · <sub>open</sub><br>
+  Fixes #647 (item 5 of #601).
 - [match ordinary v3 responses against the outstanding request](https://github.com/gosnmp/gosnmp/pull/652) · <sub>open</sub><br>
   An SNMPv3 reply is now accepted only when its context and user match the request it answers, as RFC 3412 requires.
 - [keep an established v3 authoritative engine ID](https://github.com/gosnmp/gosnmp/pull/651) · <sub>open</sub><br>
@@ -163,10 +165,10 @@ It merged, then a later merge from another PR accidentally removed it along with
 - [x] First merged PR in a popular open-source project · [KanaDojo #33690](https://github.com/lingdojo/kana-dojo/pull/33690)
 - [x] First merged PR in a project with 10k+ stars · [Jenkins #27735](https://github.com/jenkinsci/jenkins/pull/27735)
 - [x] Caught a merge that wiped 5 KanaDojo themes and [opened the fix](https://github.com/lingdojo/kana-dojo/pull/33693)
-- [x] First merge at [AMD Gaia](https://github.com/amd/gaia) · 22 merged so far
-- [ ] First merge at [gosnmp](https://github.com/gosnmp/gosnmp) · 3 PRs in review
+- [x] First merge at [AMD Gaia](https://github.com/amd/gaia) · 24 merged so far
+- [ ] First merge at [gosnmp](https://github.com/gosnmp/gosnmp) · 4 PRs in review
 - [ ] First merge at [Apache Airflow](https://github.com/apache/airflow) · [#77011](https://github.com/apache/airflow/pull/77011) in review
 - [ ] First merge at [MinIO JS](https://github.com/minio/minio-js) · [#1516](https://github.com/minio/minio-js/pull/1516) in review
-- [ ] 25 merged pull requests · 24 so far
+- [ ] 50 merged pull requests · 26 so far
 
 <sub>Numbers from the GitHub API, last updated 15 Nov 2026.</sub>
