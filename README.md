@@ -6,37 +6,26 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 30 pull requests, 23 merged, 6 open, plus 4369 and minus 693 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 34 pull requests, 24 merged, 9 open, plus 5558 and minus 753 lines." width="100%">
 
 <sub>This page rebuilds itself from the GitHub API every day. [Make your own with orbit-profile](https://github.com/ityashag/orbit-profile).</sub>
 
-30 pull requests to 6 projects (Bug fixes 19 · Other 5 · Docs 3 · Tests 1 · Cleanup 1 · Features 1). 17 of 17 code fixes shipped with tests.
+34 pull requests to 6 projects (Bug fixes 27 · Docs 3 · Security fixes 1 · Tests 1 · Cleanup 1 · Features 1). 26 of 26 code fixes shipped with tests.
 
 ### Where the work went
 
-| Area | Pull requests | Languages | Latest change |
-|---|---|---|---|
-| AMD Gaia · **Agent UI** | 4 (4 merged) | TypeScript, CSS, JSON | [#7153](https://github.com/amd/gaia/pull/7153) Renaming a chat, toggling private mode, dropping files on a chat, removing a document from a chat, and removing, cancelling or opening a folder in the Document Library now say so when they fail. |
-| AMD Gaia · **Agent UI backend** | 3 (3 merged) | Python | [#6972](https://github.com/amd/gaia/pull/6972) When the default chat model is a cloud model GAIA learns about at runtime, such as `opencode.*`, Settings no longer treats it as a local model. |
-| AMD Gaia · **Docs** | 3 (3 merged) | Markdown | [#6864](https://github.com/amd/gaia/pull/6864) Corrects the memory guide&#x27;s category count from six to nine and adds the three missing categories: `profile`, `system` and `permission`. |
-| KanaDojo · **Community themes** | 3 (1 merged) | JSON | [#34022](https://github.com/lingdojo/kana-dojo/pull/34022) `community-themes.json` lists some themes more than once: `bamboo-shadow` three times, and `koi-glow`, `matcha-drift` and `sundown-shrine` twice each. |
-| AMD Gaia · **Command line** | 2 (2 merged) | Python, Markdown | [#7132](https://github.com/amd/gaia/pull/7132) `gaia cache status` now lists every cache GAIA keeps under `~/.gaia/cache`, each with its size and file count, largest first. |
-| AMD Gaia · **Document Q&amp;A** | 2 (2 merged) | Python, Markdown | [#7154](https://github.com/amd/gaia/pull/7154) A vision model that is installed but crashing no longer turns a scanned PDF into blank pages. |
-| gosnmp/gosnmp · **gosnmp/gosnmp** | 2 (0 merged) | Go | [#651](https://github.com/gosnmp/gosnmp/pull/651) Fixes #646 (item 4 of #601). |
-| AMD Gaia · **Agent tools** | 1 (1 merged) | Python, Markdown | [#7131](https://github.com/amd/gaia/pull/7131) A document indexed twice under different names no longer fills the model&#x27;s context with copies of itself. |
-| AMD Gaia · **Agents and installs** | 1 (1 merged) | Python | [#6928](https://github.com/amd/gaia/pull/6928) `gaia agent status` now shows the installed version of an agent installed with `pip`. |
-| AMD Gaia · **Code search** | 1 (1 merged) | Python, Markdown | [#6975](https://github.com/amd/gaia/pull/6975) With Lemonade down or the embedding model name wrong, code indexing now fails on its first call and says what to do. |
-| AMD Gaia · **Model client** | 1 (1 merged) | Python | [#6907](https://github.com/amd/gaia/pull/6907) A cloud model that one part of GAIA has discovered is now recognized as cloud everywhere, from any provider, instead of being treated as if it ran on your PC. |
-| AMD Gaia · **Terminal app** | 1 (1 merged) | Go | [#6971](https://github.com/amd/gaia/pull/6971) When an installed agent&#x27;s install record is corrupt, the TUI now says so instead of dropping the agent without a word. |
-| AMD Gaia · **Website** | 1 (1 merged) | CSS | [#6859](https://github.com/amd/gaia/pull/6859) Removes styling code the GAIA website no longer used, so the site ships less dead CSS. |
-| AMD Gaia · **src** | 1 (1 merged) | Python | [#7163](https://github.com/amd/gaia/pull/7163) When Launchpad&#x27;s API stops answering, the Linux CLI check now says so. |
-| Jenkins · **core** | 1 (1 merged) |  | [#27735](https://github.com/jenkinsci/jenkins/pull/27735) In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes. |
-| Jenkins · **src** | 1 (0 merged) |  | [#27739](https://github.com/jenkinsci/jenkins/pull/27739)  |
-| MinIO JS · **AWS credentials** | 1 (0 merged) | JavaScript, TypeScript | [#1516](https://github.com/minio/minio-js/pull/1516) Lets the MinIO JavaScript client sign in with AWS credentials on EC2 and in containers, which failed because it read the wrong field name. |
-| apache/airflow · **airflow-core** | 1 (0 merged) | Python | [#77011](https://github.com/apache/airflow/pull/77011) A secrets backend&#x27;s kwargs can also be set one key at a time (`AIRFLOWSECRETSBACKEND_KWARG&lt;KEY&gt;`, and the `[workers]` equivalent). |
+| Project | Merged | Open | Where in the code |
+|:--|--:|--:|:--|
+| [AMD Gaia](https://github.com/amd/gaia) | 22 | 2 | Agent UI 4 · Agent UI backend 3 · Docs 3 · Agents and installs 2 · Command line 2 · +8 more |
+| [gosnmp](https://github.com/gosnmp/gosnmp) | 0 | 3 | SNMPv3 3 |
+| [KanaDojo](https://github.com/lingdojo/kana-dojo) | 1 | 1 | Community themes 3 |
+| [Jenkins](https://github.com/jenkinsci/jenkins) | 1 | 1 | Plugin manager 1 · Translations 1 |
+| [Apache Airflow](https://github.com/apache/airflow) | 0 | 1 | Configuration 1 |
+| [MinIO JS](https://github.com/minio/minio-js) | 0 | 1 | AWS credentials 1 |
 
 ### Recently merged
 
+- **AMD Gaia** · [map Unicode look-alikes when neutralizing fence-marker names](https://github.com/amd/gaia/pull/8215) · <sub>merged</sub>
 - **AMD Gaia** · [name a Launchpad API timeout as an outage](https://github.com/amd/gaia/pull/7163) · <sub>merged</sub><br>
   When Launchpad&#x27;s API stops answering, the Linux CLI check now says so.
 - **Jenkins** · [Show values and apostrophes in translated messages](https://github.com/jenkinsci/jenkins/pull/27735) · <sub>merged</sub><br>
@@ -45,15 +34,18 @@ Working professional, contributing to open source.
   A vision model that is installed but crashing no longer turns a scanned PDF into blank pages.
 - **AMD Gaia** · [say when chat and Document Library actions fail](https://github.com/amd/gaia/pull/7153) · <sub>merged</sub><br>
   Renaming a chat, toggling private mode, dropping files on a chat, removing a document from a chat, and removing, cancelling or opening a folder in the Document Library now say so when they fail.
-- **AMD Gaia** · [read images left unread while the vision model was down](https://github.com/amd/gaia/pull/7133) · <sub>merged</sub><br>
-  A PDF or PowerPoint indexed while the vision model was down no longer keeps its images unsearchable for good.
 
 <details>
-<summary>All 30 pull requests, each with what it does</summary>
+<summary>All 34 pull requests, each with what it does</summary>
 <br>
 
-**AMD Gaia** · 21
+**AMD Gaia** · 24
 
+- [name GAIA&#x27;s chat model in the status line on a shared Lemonade](https://github.com/amd/gaia/pull/8224) · <sub>open</sub><br>
+  The TUI status line (`gaia-tui status`, the Local row in the model picker) now names the model GAIA chats with, not whichever model Lemonade loaded last, on a Lemonade shared with other apps.
+- [mark a goal stalled after 10 check-backs in a row](https://github.com/amd/gaia/pull/8223) · <sub>open</sub><br>
+  A background goal that only ever asks to check back later is now marked stalled after 10 check-backs in a row, with the agent&#x27;s last reason, instead of running until the hourly cap.
+- [map Unicode look-alikes when neutralizing fence-marker names](https://github.com/amd/gaia/pull/8215) · <sub>merged</sub>
 - [name a Launchpad API timeout as an outage](https://github.com/amd/gaia/pull/7163) · <sub>merged</sub><br>
   When Launchpad&#x27;s API stops answering, the Linux CLI check now says so.
 - [stop indexing on a broken vision model and name it](https://github.com/amd/gaia/pull/7154) · <sub>merged</sub><br>
@@ -97,6 +89,15 @@ Working professional, contributing to open source.
 - [remove nvm alias step from the Windows tab](https://github.com/amd/gaia/pull/6852) · <sub>merged</sub><br>
   Removes the `nvm alias default 20.20.0` step from the Windows tab of the setup guide, because NVM for Windows has no `alias` command.
 
+**gosnmp** · 3
+
+- [match ordinary v3 responses against the outstanding request](https://github.com/gosnmp/gosnmp/pull/652) · <sub>open</sub><br>
+  An SNMPv3 reply is now accepted only when its context and user match the request it answers, as RFC 3412 requires.
+- [keep an established v3 authoritative engine ID](https://github.com/gosnmp/gosnmp/pull/651) · <sub>open</sub><br>
+  Once an SNMPv3 session knows its agent&#x27;s engine ID, a message from a different engine can no longer take the session over.
+- [take the incoming v3 security level from the received msgFlags](https://github.com/gosnmp/gosnmp/pull/650) · <sub>open</sub><br>
+  An SNMPv3 reply is now checked at the security level its own flags declare, so an encrypted request no longer accepts an unencrypted answer.
+
 **KanaDojo** · 3
 
 - [remove duplicate entries from community-themes.json](https://github.com/lingdojo/kana-dojo/pull/34022) · <sub>open</sub><br>
@@ -106,20 +107,14 @@ Working professional, contributing to open source.
 - [add new Tsuyu Drizzle theme](https://github.com/lingdojo/kana-dojo/pull/33690) · <sub>merged</sub><br>
   Adds the &quot;Tsuyu Drizzle&quot; color theme to `community/content/community-themes.json`, using the values from the issue.
 
-**gosnmp/gosnmp** · 2
-
-- [keep an established v3 authoritative engine ID](https://github.com/gosnmp/gosnmp/pull/651) · <sub>open</sub><br>
-  Fixes #646 (item 4 of #601).
-- [take the incoming v3 security level from the received msgFlags](https://github.com/gosnmp/gosnmp/pull/650) · <sub>open</sub><br>
-  Fixes #643 (item 1 of #601).
-
 **Jenkins** · 2
 
-- [[JENKINS-69347] Prevent enabling a plugin whose dependency is disabled](https://github.com/jenkinsci/jenkins/pull/27739) · <sub>open</sub>
+- [[JENKINS-69347] Prevent enabling a plugin whose dependency is disabled](https://github.com/jenkinsci/jenkins/pull/27739) · <sub>open</sub><br>
+  On the Installed plugins page, a plugin whose dependency is switched off can no longer be switched on and then fail to load after a restart.
 - [Show values and apostrophes in translated messages](https://github.com/jenkinsci/jenkins/pull/27735) · <sub>merged</sub><br>
   In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes.
 
-**apache/airflow** · 1
+**Apache Airflow** · 1
 
 - [Hide team scoped per-key secrets backend kwargs in config output](https://github.com/apache/airflow/pull/77011) · <sub>open</sub><br>
   A secrets backend&#x27;s kwargs can also be set one key at a time (`AIRFLOWSECRETSBACKEND_KWARG&lt;KEY&gt;`, and the `[workers]` equivalent).
@@ -165,10 +160,13 @@ It merged, then a later merge from another PR accidentally removed it along with
 
 ## On my list
 
-- [x] First merged PR in a popular open-source project: [KanaDojo #33690](https://github.com/lingdojo/kana-dojo/pull/33690)
-- [x] Spotted a merge that wiped 5 themes from KanaDojo and [opened the fix](https://github.com/lingdojo/kana-dojo/pull/33693)
-- [x] First merge at [AMD Gaia](https://github.com/amd/gaia)
-- [ ] First merge at [MinIO](https://github.com/minio/minio-js)
-- [x] First merged PR in a project with 10k+ stars
+- [x] First merged PR in a popular open-source project · [KanaDojo #33690](https://github.com/lingdojo/kana-dojo/pull/33690)
+- [x] First merged PR in a project with 10k+ stars · [Jenkins #27735](https://github.com/jenkinsci/jenkins/pull/27735)
+- [x] Caught a merge that wiped 5 KanaDojo themes and [opened the fix](https://github.com/lingdojo/kana-dojo/pull/33693)
+- [x] First merge at [AMD Gaia](https://github.com/amd/gaia) · 22 merged so far
+- [ ] First merge at [gosnmp](https://github.com/gosnmp/gosnmp) · 3 PRs in review
+- [ ] First merge at [Apache Airflow](https://github.com/apache/airflow) · [#77011](https://github.com/apache/airflow/pull/77011) in review
+- [ ] First merge at [MinIO JS](https://github.com/minio/minio-js) · [#1516](https://github.com/minio/minio-js/pull/1516) in review
+- [ ] 25 merged pull requests · 24 so far
 
-<sub>Numbers from the GitHub API, last updated 14 Nov 2026.</sub>
+<sub>Numbers from the GitHub API, last updated 15 Nov 2026.</sub>

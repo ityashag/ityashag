@@ -21,7 +21,8 @@ ASSETS.mkdir(parents=True, exist_ok=True)
 
 SANS = "ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif"
 MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
-PROJECT_NAMES = {"amd/gaia": "AMD Gaia", "minio/minio-js": "MinIO JS", "lingdojo/kana-dojo": "KanaDojo", "jenkinsci/jenkins": "Jenkins"}
+PROJECT_NAMES = {"amd/gaia": "AMD Gaia", "minio/minio-js": "MinIO JS", "lingdojo/kana-dojo": "KanaDojo", "jenkinsci/jenkins": "Jenkins",
+                 "gosnmp/gosnmp": "gosnmp", "apache/airflow": "Apache Airflow"}
 
 
 def gql(query):
@@ -98,7 +99,7 @@ STYLE = """<style>
 
 
 # The conventional-commit type in a PR title, as a kind of work.
-KINDS = {"fix": "Bug fixes", "docs": "Docs", "test": "Tests", "feat": "Features", "theme": "Features",
+KINDS = {"fix": "Bug fixes", "security": "Security fixes", "docs": "Docs", "test": "Tests", "feat": "Features", "theme": "Features",
          "perf": "Performance", "chore": "Cleanup", "refactor": "Cleanup", "style": "Cleanup", "ci": "Build and CI"}
 # Areas of each codebase by path prefix; the first match wins.
 AREAS = {
@@ -107,19 +108,35 @@ AREAS = {
                  ("src/gaia/rag/", "Document Q&A"), ("src/gaia/llm/", "Model client"),
                  ("src/gaia/agents/tools/", "Agent tools"), ("src/gaia/agents/", "Agents and installs"),
                  ("src/gaia/hub/", "Agents and installs"), ("src/gaia/cli.py", "Command line"),
-                 ("website/", "Website"), ("docs/", "Docs")],
+                 ("src/gaia/installer/", "Installer"), ("website/", "Website"), ("docs/", "Docs")],
     "lingdojo/kana-dojo": [("community/", "Community themes")],
     "minio/minio-js": [("src/IamAwsProvider", "AWS credentials"), ("src/", "Client library")],
+    "jenkinsci/jenkins": [("core/src/main/resources/", "Translations"), ("src/main/", "Plugin manager"),
+                          ("core/", "Core")],
+    "gosnmp/gosnmp": [("", "SNMPv3")],
+    "apache/airflow": [("airflow-core/src/airflow/api_fastapi/", "Config API"), ("shared/configuration/", "Configuration"),
+                       ("airflow-core/src/airflow/configuration", "Configuration")],
 }
-LANGS = {".py": "Python", ".ts": "TypeScript", ".tsx": "TypeScript", ".go": "Go", ".css": "CSS", ".js": "JavaScript",
-         ".json": "JSON", ".md": "Markdown", ".mdx": "Markdown"}
-CODE_EXT = (".py", ".ts", ".tsx", ".go", ".js", ".css")
-TEST_PATH = re.compile(r"(^|/)(tests?|__tests__|visual)/|_test\.go$|\.test\.[jt]sx?$|(^|/)test_[^/]+\.py$")
+LANGS = {".py": "Python", ".ts": "TypeScript", ".tsx": "TypeScript", ".go": "Go", ".css": "CSS", ".scss": "CSS",
+         ".js": "JavaScript", ".java": "Java", ".properties": "Java", ".json": "JSON", ".md": "Markdown",
+         ".mdx": "Markdown"}
+CODE_EXT = (".py", ".ts", ".tsx", ".go", ".js", ".css", ".scss", ".java", ".properties")
+TEST_PATH = re.compile(r"(^|/)(tests?|__tests__|visual)/|_test\.go$|\.test\.[jt]sx?$|(^|/)test_[^/]+\.py$"
+                       r"|Tests?\.java$")
+# For titles without a conventional-commit type: the first word, after any issue key.
+VERBS = (("fix", "Bug fixes"), ("correct", "Bug fixes"), ("prevent", "Bug fixes"), ("avoid", "Bug fixes"),
+         ("handle", "Bug fixes"), ("keep", "Bug fixes"), ("take", "Bug fixes"), ("match", "Bug fixes"),
+         ("hide", "Bug fixes"), ("show", "Bug fixes"), ("stop", "Bug fixes"), ("restore", "Bug fixes"),
+         ("read", "Bug fixes"), ("add", "Features"), ("support", "Features"), ("allow", "Features"),
+         ("doc", "Docs"), ("test", "Tests"), ("refactor", "Cleanup"), ("remove", "Cleanup"), ("bump", "Cleanup"))
 
 
 def kind(p):
     m = re.match(r"(\w+)(\([^)]*\))?!?:", p["title"])
-    return KINDS.get(m.group(1).lower(), "Other") if m else "Other"
+    if m and m.group(1).lower() in KINDS:
+        return KINDS[m.group(1).lower()]
+    title = re.sub(r"^(\[[^\]]*\]\s*|\w+(\([^)]*\))?!?:\s*)+", "", p["title"]).lower()
+    return next((k for word, k in VERBS if title.startswith(word)), "Other")
 
 
 def files(p):
@@ -145,7 +162,7 @@ def main_area(p):
 
 
 def is_code_fix(p):
-    return kind(p) == "Bug fixes" and any(
+    return kind(p) in ("Bug fixes", "Security fixes") and any(
         f["path"].endswith(CODE_EXT) and not f["path"].startswith("docs/") for f in files(p))
 
 
@@ -260,116 +277,141 @@ def cover():
 
 
 def receipt():
-    x0, rw, w = 70, 590, 1280
+    x0, rw, w = 64, 560, 1280
     top = 44
+    left, right = x0 + 34, x0 + rw - 34
     t = []
 
-    def line(y, left, right="", size=19, weight=400, lc=INK, rc=None):
-        s = f'<text x="{x0 + 36}" y="{y}" font-family="{MONO}" font-size="{size}" font-weight="{weight}" fill="{lc}">{esc(left)}</text>'
-        if right:
-            s += f'<text x="{x0 + rw - 36}" y="{y}" text-anchor="end" font-family="{MONO}" font-size="{size}" font-weight="{weight}" fill="{rc or lc}">{esc(right)}</text>'
-        return s
+    def text(x, y, s, size=17, weight=400, fill=INK, anchor="start", family=MONO):
+        a = f' text-anchor="{anchor}"' if anchor != "start" else ""
+        return (f'<text x="{x}" y="{y}"{a} font-family="{family}" font-size="{size}" '
+                f'font-weight="{weight}" fill="{fill}">{esc(s)}</text>')
 
     def rule(y):
-        return f'<path d="M{x0 + 36},{y} L{x0 + rw - 36},{y}" stroke="{FAINT}" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>'
+        return f'<path d="M{left},{y} L{right},{y}" stroke="{FAINT}" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>'
 
     sm = summary()
-    y = top + 56
-    t.append(f'<text x="{x0 + rw / 2}" y="{y}" text-anchor="middle" font-family="{SERIF}" font-weight="700" font-size="33" fill="{INK}">Open Source Receipt</text>')
+    y = top + 58
+    t.append(text(x0 + rw / 2, y, "Open Source Receipt", 32, 700, INK, "middle", SERIF))
+    y += 30
+    t.append(text(x0 + rw / 2, y, f"{today.upper()}  ·  {LOGIN.upper()}", 14, 400, FAINT, "middle"))
+
+    # Projects: two aligned number columns instead of "n merged · n open" strings.
+    col_m, col_o = right - 92, right
+    y += 30
+    t.append(rule(y))
     y += 32
-    t.append(f'<text x="{x0 + rw / 2}" y="{y}" text-anchor="middle" font-family="{MONO}" font-size="15" fill="{FAINT}">{esc(today.upper())}  ·  {LOGIN.upper()}</text>')
-
-    def section(y, title, rows):
-        y += 26
-        t.append(rule(y))
-        y += 34
-        t.append(line(y, title, "", 14, 700, FAINT))
-        for left, right, strong in rows:
-            y += 28
-            t.append(line(y, left, right, 17, 700 if strong else 400))
-        return y
-
-    shown = sm["projects"][:4]
-    rows = [(name, f'{sum(p["merged"] for p in items)} merged · {sum(not p["merged"] for p in items)} open', False) for name, items in shown]
+    t.append(text(left, y, "PROJECTS", 13, 700, FAINT))
+    t.append(text(col_m, y, "MERGED", 13, 700, FAINT, "end"))
+    t.append(text(col_o, y, "OPEN", 13, 700, FAINT, "end"))
+    shown = sm["projects"][:6]
+    for name, items in shown:
+        y += 29
+        t.append(text(left, y, name))
+        t.append(text(col_m, y, str(sum(p["merged"] for p in items)), anchor="end"))
+        t.append(text(col_o, y, str(sum(p["state"] == "OPEN" for p in items)), anchor="end"))
     if len(sm["projects"]) > len(shown):
-        rows.append((f'+ {len(sm["projects"]) - len(shown)} more projects', "", False))
-    y = section(y, "PROJECTS", rows)
-    rows = [(k, str(n), False) for k, n in sm["kinds"]]
-    rows.append(("CODE FIXES WITH TESTS", f'{sm["tested"]} / {len(sm["code_fixes"])}', True))
-    y = section(y, "WORK", rows)
-    y = section(y, "WHERE IN THE CODE", [(area, f'{len(items)} PR{"s" if len(items) > 1 else ""}', False) for (_, area), items in sm["areas"][:6]])
-    y = section(y, "LANGUAGES", [(" · ".join(f"{lang} {pct}%" for lang, pct in sm["langs"][:3]), "", False)])
+        rest = sm["projects"][len(shown):]
+        y += 29
+        t.append(text(left, y, f"+ {len(rest)} more", fill=FAINT))
+        t.append(text(col_m, y, str(sum(p["merged"] for _, items in rest for p in items)), fill=FAINT, anchor="end"))
+        t.append(text(col_o, y, str(sum(p["state"] == "OPEN" for _, items in rest for p in items)), fill=FAINT, anchor="end"))
+
     y += 26
     t.append(rule(y))
-    y += 38
-    t.append(line(y, "PULL REQUESTS", str(len(oss)), 19, 700))
-    y += 29
-    t.append(line(y, "MERGED / OPEN", f"{oss_merged} / {oss_open}", 17))
-    y += 27
-    t.append(line(y, "LINES CHANGED", f"+{added} −{removed}", 17))
-    y += 27
-    t.append(line(y, "PAID IN", "code review", 17))
-    y += 22
+    y += 32
+    t.append(text(left, y, "WORK", 13, 700, FAINT))
+    for k, n in sm["kinds"][:6]:
+        y += 29
+        t.append(text(left, y, k))
+        t.append(text(right, y, str(n), anchor="end"))
+    y += 33
+    t.append(text(left, y, "FIXES WITH TESTS", 17, 700))
+    t.append(text(right, y, f'{sm["tested"]} / {len(sm["code_fixes"])}', 17, 700, anchor="end"))
+
+    y += 26
     t.append(rule(y))
-    y += 20
-    pos = x0 + 130
+    y += 32
+    t.append(text(left, y, "LANGUAGES", 13, 700, FAINT))
+    y += 29
+    t.append(text(left, y, "  ·  ".join(f"{lang} {pct}%" for lang, pct in sm["langs"][:3])))
+
+    y += 26
+    t.append(rule(y))
+    y += 36
+    t.append(text(left, y, "PULL REQUESTS", 19, 700))
+    t.append(text(right, y, str(len(oss)), 19, 700, anchor="end"))
+    y += 29
+    t.append(text(left, y, "LINES CHANGED"))
+    t.append(text(right, y, f"+{added:,}  −{removed:,}", anchor="end"))
+    y += 29
+    t.append(text(left, y, "PAID IN"))
+    t.append(text(right, y, "code review", anchor="end"))
+    y += 24
+    t.append(rule(y))
+    y += 22
+    pos, bars = x0 + 130, []
     for ch in "".join(str(p["number"]) for p in oss):
         n = int(ch) % 4 + 2
         if pos + n > x0 + rw - 130:
             break
-        t.append(f'<rect x="{pos}" y="{y}" width="{n}" height="32" fill="{INK}"/>')
+        bars.append(f'<rect x="{pos}" y="{y}" width="{n}" height="30" fill="{INK}"/>')
         pos += n + (int(ch) % 3) + 3
-    t.append(f'<text x="{x0 + rw / 2}" y="{y + 56}" text-anchor="middle" font-family="{MONO}" font-size="14" fill="{FAINT}">thank you for reviewing</text>')
-    paper_h = y + 84 - top
-    h = max(paper_h + 110, 720)
-    teeth = "".join(f"L{x0 + rw - i * 20 - 10},{top + paper_h + 10} L{x0 + rw - (i + 1) * 20},{top + paper_h} " for i in range(int(rw / 20)))
+    t += bars
+    t.append(text(x0 + rw / 2, y + 54, "thank you for reviewing", 13, 400, FAINT, "middle"))
+    paper_h = y + 80 - top
+    teeth = "".join(f"L{x0 + rw - i * 20 - 10},{top + paper_h + 9} L{x0 + rw - (i + 1) * 20},{top + paper_h} "
+                    for i in range(int(rw / 20)))
     t.insert(0, f'<path d="M{x0},{top} L{x0 + rw},{top} L{x0 + rw},{top + paper_h} {teeth}Z" fill="{PAPER}"/>')
-    paper = f'<g class="bob"><g transform="rotate(-1.2 {x0 + rw / 2} {top + paper_h / 2})">{"".join(t)}</g></g>'
+    paper = f'<g class="bob">{"".join(t)}</g>'
 
-    # Orrery: one orbit per project, one moon per pull request.
-    # The orbits share a fixed width, so more projects pack closer instead of
-    # growing into the receipt, the stats or off the top of the image.
-    outer = 172
-    cx, cy = 950, outer + 44
+    # Orrery: one orbit per project, one moon per pull request, the busiest
+    # project on the widest orbit. Names sit in a column to the right on a
+    # dotted leader from the top of their orbit, so no moon ever crosses one.
+    outer = 165
+    cx, cy = 872, outer + 56
     groups = {}
     for p in oss:
         groups.setdefault(p["repository"]["nameWithOwner"], []).append(p)
-    # The busiest project gets the widest orbit, so its moons have room.
     rings = sorted(groups.items(), key=lambda kv: (len(kv[1]), kv[0]))
-    step = min(46, (outer - 52) / max(1, len(rings) - 1))
+    step = min(44, (outer - 48) / max(1, len(rings) - 1))
     radii = [outer - (len(rings) - 1 - i) * step for i in range(len(rings))]
-    # One moon size for every orbit, shrinking only when the widest one fills up.
     widest = max(len(items) for _, items in rings)
     moon = min(6.0, max(2.5, 2 * math.pi * radii[-1] / widest / 3.2))
+    lx = cx + outer + 30
     orbit = [f'<circle cx="{cx}" cy="{cy}" r="9" fill="#FFE2C2"/><circle cx="{cx}" cy="{cy}" r="20" fill="#FFE2C2" opacity=".12"/>']
+    labels = []
     for i, ((repo, items), r) in enumerate(zip(rings, radii)):
-        orbit.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{STAR}" stroke-opacity=".3"/>')
+        orbit.append(f'<circle cx="{cx}" cy="{cy}" r="{r:.1f}" fill="none" stroke="{STAR}" stroke-opacity=".28"/>')
         moons = []
         for j, p in enumerate(items):
             a = math.radians(40 + i * 75 + j * 360 / len(items))
             col = MERGED if p["merged"] else STAR
             moons.append(f'<circle cx="{cx + r * math.cos(a):.1f}" cy="{cy + r * math.sin(a):.1f}" r="{moon:.1f}" fill="{col}" stroke="{SPACE}" stroke-width="2"/>')
         orbit.append(f'<g class="sp" style="--d:{70 + i * 45}s;--c:{cx}px {cy}px">{"".join(moons)}</g>')
-        # Above the moons' path, so a passing moon never covers the name.
-        orbit.append(f'<text x="{cx}" y="{cy - r - moon - 11:.0f}" text-anchor="middle" font-family="{SERIF}" font-style="italic" font-size="15" fill="{SOFT}" stroke="{SPACE}" stroke-width="4" paint-order="stroke">{esc(PROJECT_NAMES.get(repo, repo))}</text>')
-    kx, ky = cx + outer + 36, 40
-    orbit.append(f'<circle cx="{kx}" cy="{ky - 5}" r="5" fill="{MERGED}"/><text x="{kx + 13}" y="{ky}" font-family="{SERIF}" font-style="italic" font-size="14" fill="{SOFT}">merged</text>'
-                 f'<circle cx="{kx}" cy="{ky + 19}" r="5" fill="{STAR}"/><text x="{kx + 13}" y="{ky + 24}" font-family="{SERIF}" font-style="italic" font-size="14" fill="{SOFT}">open</text>')
-    sx = 742
+        ly = cy - r
+        labels.append(f'<circle cx="{cx}" cy="{ly:.1f}" r="1.8" fill="{SOFT}"/>'
+                      f'<path d="M{cx + 4},{ly:.1f} L{lx - 8},{ly:.1f}" stroke="{SOFT}" stroke-opacity=".45" stroke-width="1" stroke-dasharray="1 4" stroke-linecap="round"/>'
+                      f'<text x="{lx}" y="{ly + 5:.1f}" font-family="{SERIF}" font-style="italic" font-size="15" fill="{STAR}">{esc(PROJECT_NAMES.get(repo, repo))}'
+                      f'<tspan fill="{SOFT}">  {len(items)}</tspan></text>')
+    ky = cy + 34
+    key = (f'<circle cx="{lx + 5}" cy="{ky - 5}" r="5" fill="{MERGED}"/><text x="{lx + 18}" y="{ky}" font-family="{SERIF}" font-style="italic" font-size="14" fill="{SOFT}">merged</text>'
+           f'<circle cx="{lx + 5}" cy="{ky + 18}" r="5" fill="{STAR}"/><text x="{lx + 18}" y="{ky + 23}" font-family="{SERIF}" font-style="italic" font-size="14" fill="{SOFT}">open</text>')
+    sx = 700
 
     def stat(y, big, small):
-        return (f'<text x="{sx}" y="{y}" font-family="{SERIF}" font-size="52" fill="{STAR}">{esc(big)}</text>'
+        return (f'<text x="{sx}" y="{y}" font-family="{SERIF}" font-size="50" fill="{STAR}">{esc(big)}</text>'
                 f'<text x="{sx}" y="{y + 30}" font-family="{SERIF}" font-style="italic" font-size="19" fill="{SOFT}">{esc(small)}</text>')
 
-    # Below the widest orbit's moons.
-    sy = cy + outer + 66
+    sy = cy + outer + 72
     stats = (stat(sy, f"{len(oss)} pull requests", f"across {len(oss_projects)} projects, {oss_merged} merged so far")
-             + stat(sy + 98, f"{stars_combined:,} stars", "on those projects (theirs, not mine)")
-             + stat(sy + 196, f"{sm['tested']} of {len(sm['code_fixes'])} fixes", "came with tests of their own"))
-    label = (f"A paper receipt floating in space summing up {len(oss)} open-source pull requests by project, kind of work, "
-             f"area of the code and language: {oss_merged} merged, {oss_open} open. An orrery shows them orbiting {len(oss_projects)} projects.")
+             + stat(sy + 96, f"{stars_combined:,} stars", "on those projects (theirs, not mine)")
+             + stat(sy + 192, f"{sm['tested']} of {len(sm['code_fixes'])} fixes", "came with tests of their own"))
+    h = max(top + paper_h + 60, sy + 192 + 60)
+    label = (f"A paper receipt floating in space summing up {len(oss)} open-source pull requests by project, kind of work "
+             f"and language: {oss_merged} merged, {oss_open} open. An orrery shows them orbiting {len(oss_projects)} projects.")
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="{esc(label)}">'
-            f'{STYLE}{starfield(w, h, 23, 230)}{paper}{"".join(orbit)}{stats}</svg>')
+            f'{STYLE}{starfield(w, h, 23, 230)}{paper}{"".join(orbit)}{"".join(labels)}{key}{stats}</svg>')
 
 
 # What a PR does, in plain words, where its Summary leads with code instead.
@@ -380,6 +422,10 @@ PLAIN = {
     "https://github.com/amd/gaia/pull/6859": "Removes styling code the GAIA website no longer used, so the site ships less dead CSS.",
     "https://github.com/lingdojo/kana-dojo/pull/33693": "Brings back five community themes that two later merges had accidentally deleted.",
     "https://github.com/minio/minio-js/pull/1516": "Lets the MinIO JavaScript client sign in with AWS credentials on EC2 and in containers, which failed because it read the wrong field name.",
+    "https://github.com/jenkinsci/jenkins/pull/27739": "On the Installed plugins page, a plugin whose dependency is switched off can no longer be switched on and then fail to load after a restart.",
+    "https://github.com/gosnmp/gosnmp/pull/650": "An SNMPv3 reply is now checked at the security level its own flags declare, so an encrypted request no longer accepts an unencrypted answer.",
+    "https://github.com/gosnmp/gosnmp/pull/651": "Once an SNMPv3 session knows its agent's engine ID, a message from a different engine can no longer take the session over.",
+    "https://github.com/gosnmp/gosnmp/pull/652": "An SNMPv3 reply is now accepted only when its context and user match the request it answers, as RFC 3412 requires.",
 }
 
 
@@ -422,11 +468,15 @@ def work_sections():
     kinds = " · ".join(f"{k} {n}" for k, n in sm["kinds"])
     lead = (f"{len(oss)} pull requests to {len(sm['projects'])} projects ({kinds}). "
             f"{sm['tested']} of {len(sm['code_fixes'])} code fixes shipped with tests.")
+    def areas_of(project):
+        found = [(area, len(items)) for (proj, area), items in sm["areas"] if proj == project]
+        shown = " · ".join(f"{cell(area)} {n}" for area, n in found[:5])
+        return shown + (f" · +{len(found) - 5} more" if len(found) > 5 else "")
+
     table = "\n".join(
-        f"| {cell(project)} · **{cell(area)}** | {len(items)} ({sum(p['merged'] for p in items)} merged) "
-        f"| {cell(', '.join(lang for lang, _ in language_share(items)[:3]))} "
-        f"| [#{items[0]['number']}]({items[0]['url']}) {cell(why(items[0]))} |"
-        for (project, area), items in sm["areas"])
+        f"| [{cell(name)}](https://github.com/{items[0]['repository']['nameWithOwner']}) "
+        f"| {sum(p['merged'] for p in items)} | {sum(p['state'] == 'OPEN' for p in items)} | {areas_of(name)} |"
+        for name, items in sm["projects"])
     merged = [p for p in oss if p["merged"]][:5]
     grouped = "\n\n".join(f"**{esc(name)}** · {len(items)}\n\n" + "\n".join(pr_line(p) for p in items)
                           for name, items in sm["projects"])
@@ -434,8 +484,8 @@ def work_sections():
 
 ### Where the work went
 
-| Area | Pull requests | Languages | Latest change |
-|---|---|---|---|
+| Project | Merged | Open | Where in the code |
+|:--|--:|--:|:--|
 {table}
 
 ### Recently merged
@@ -453,12 +503,35 @@ def work_sections():
 
 def readme():
     team_rows = "\n".join(f'| {esc(p["repository"]["nameWithOwner"])} | [{esc(p["title"])}]({p["url"]}) | {"Merged" if p["merged"] else p["state"].title()} |' for p in team)
-    merged_oss = next((p for p in reversed(oss) if p["merged"]), None)  # oss is newest first; this line is about the first merge
+    merged_oss = next((p for p in reversed(oss) if p["merged"]), None)  # oss is newest first
+    big_oss = next((p for p in reversed(oss) if p["merged"] and p["repository"]["stargazerCount"] >= 10000), None)
     restore = next((p for p in oss if "restore" in p["title"].lower()), None)
-    first_line = f"First merged PR in a popular open-source project: [{PROJECT_NAMES[merged_oss['repository']['nameWithOwner']]} #{merged_oss['number']}]({merged_oss['url']})" if merged_oss else ""
-    catch_line = f"Spotted a merge that wiped 5 themes from KanaDojo and [opened the fix]({restore['url']})" if restore else ""
-    tick = lambda repo: "x" if any(p["merged"] for p in oss if p["repository"]["nameWithOwner"] == repo) else " "
-    big = "x" if any(p["merged"] and p["repository"]["stargazerCount"] >= 10000 for p in oss) else " "
+
+    def ref(p):
+        name = PROJECT_NAMES.get(p["repository"]["nameWithOwner"], p["repository"]["nameWithOwner"])
+        return f"[{esc(name)} #{p['number']}]({p['url']})"
+
+    done, todo = [], []
+    if merged_oss:
+        done.append(f"First merged PR in a popular open-source project · {ref(merged_oss)}")
+    if big_oss:
+        done.append(f"First merged PR in a project with 10k+ stars · {ref(big_oss)}")
+    if restore:
+        done.append(f"Caught a merge that wiped 5 KanaDojo themes and [opened the fix]({restore['url']})")
+    for name, items in summary()["projects"]:
+        merged_here = [p for p in items if p["merged"]]
+        open_here = [p for p in items if p["state"] == "OPEN"]
+        url = f"https://github.com/{items[0]['repository']['nameWithOwner']}"
+        named = {p["repository"]["nameWithOwner"] for p in (merged_oss, big_oss) if p}
+        if merged_here and items[0]["repository"]["nameWithOwner"] not in named:
+            done.append(f"First merge at [{esc(name)}]({url}) · {len(merged_here)} merged so far")
+        elif not merged_here and open_here:
+            waiting = (f"[#{open_here[0]['number']}]({open_here[0]['url']})" if len(open_here) == 1
+                       else f"{len(open_here)} PRs")
+            todo.append(f"First merge at [{esc(name)}]({url}) · {waiting} in review")
+    goal = next(n for n in (10, 25, 50, 100, 250, 500, 1000) if n > oss_merged)
+    todo.append(f"{goal} merged pull requests · {oss_merged} so far")
+    checklist = "\n".join([f"- [x] {line}" for line in done] + [f"- [ ] {line}" for line in todo])
 
     def built(name, title, line):
         return f'- **[{esc(title)}]({repo_by_name[name]["url"]})** · {esc(line)}'
@@ -508,11 +581,7 @@ It merged, then a later merge from another PR accidentally removed it along with
 
 ## On my list
 
-- [{'x' if merged_oss else ' '}] {first_line}
-- [{'x' if restore else ' '}] {catch_line}
-- [{tick('amd/gaia')}] First merge at [AMD Gaia](https://github.com/amd/gaia)
-- [{tick('minio/minio-js')}] First merge at [MinIO](https://github.com/minio/minio-js)
-- [{big}] First merged PR in a project with 10k+ stars
+{checklist}
 
 <sub>Numbers from the GitHub API, last updated {esc(today)}.</sub>
 """
