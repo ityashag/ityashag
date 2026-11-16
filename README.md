@@ -6,17 +6,17 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 35 pull requests, 26 merged, 8 open, plus 6078 and minus 759 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 36 pull requests, 27 merged, 8 open, plus 6337 and minus 762 lines." width="100%">
 
 <sub>This page rebuilds itself from the GitHub API every day. [Make your own with orbit-profile](https://github.com/ityashag/orbit-profile).</sub>
 
-35 pull requests to 6 projects (Bug fixes 27 · Docs 3 · Other 1 · Security fixes 1 · Tests 1 · Cleanup 1 · Features 1). 26 of 26 code fixes shipped with tests.
+36 pull requests to 6 projects (Bug fixes 28 · Docs 3 · Other 1 · Security fixes 1 · Tests 1 · Cleanup 1 · Features 1). 27 of 27 code fixes shipped with tests.
 
 ### Where the work went
 
 | Project | Merged | Open | Where in the code |
 |:--|--:|--:|:--|
-| [AMD Gaia](https://github.com/amd/gaia) | 24 | 0 | Agent UI 4 · Agent UI backend 3 · Docs 3 · Agents and installs 2 · Command line 2 · +8 more |
+| [AMD Gaia](https://github.com/amd/gaia) | 25 | 0 | Agent UI 4 · Agent UI backend 3 · Docs 3 · Agents and installs 2 · Command line 2 · +9 more |
 | [gosnmp](https://github.com/gosnmp/gosnmp) | 0 | 4 | SNMPv3 4 |
 | [KanaDojo](https://github.com/lingdojo/kana-dojo) | 1 | 1 | Community themes 3 |
 | [Jenkins](https://github.com/jenkinsci/jenkins) | 1 | 1 | Plugin manager 1 · Translations 1 |
@@ -25,6 +25,8 @@ Working professional, contributing to open source.
 
 ### Recently merged
 
+- **AMD Gaia** · [record a failing recurring schedule on the schedule itself](https://github.com/amd/gaia/pull/8320) · <sub>merged</sub><br>
+  A recurring schedule whose runs fail now says so: `gaia schedule list` adds `failing=N`, and `gaia schedule show` prints how many runs in a row failed, when the latest did, its error, and the last run that succeeded.
 - **AMD Gaia** · [name GAIA&#x27;s chat model in the status line on a shared Lemonade](https://github.com/amd/gaia/pull/8224) · <sub>merged</sub><br>
   The TUI status line (`gaia-tui status`, the Local row in the model picker) now names the model GAIA chats with, not whichever model Lemonade loaded last, on a Lemonade shared with other apps.
 - **AMD Gaia** · [mark a goal stalled after 10 check-backs in a row](https://github.com/amd/gaia/pull/8223) · <sub>merged</sub><br>
@@ -32,15 +34,15 @@ Working professional, contributing to open source.
 - **AMD Gaia** · [map Unicode look-alikes when neutralizing fence-marker names](https://github.com/amd/gaia/pull/8215) · <sub>merged</sub>
 - **AMD Gaia** · [name a Launchpad API timeout as an outage](https://github.com/amd/gaia/pull/7163) · <sub>merged</sub><br>
   When Launchpad&#x27;s API stops answering, the Linux CLI check now says so.
-- **Jenkins** · [Show values and apostrophes in translated messages](https://github.com/jenkinsci/jenkins/pull/27735) · <sub>merged</sub><br>
-  In 55 translation files across 21 languages, a message shows `{0}` instead of its value, loses its apostrophe, or reads an argument the code never passes.
 
 <details>
-<summary>All 35 pull requests, each with what it does</summary>
+<summary>All 36 pull requests, each with what it does</summary>
 <br>
 
-**AMD Gaia** · 24
+**AMD Gaia** · 25
 
+- [record a failing recurring schedule on the schedule itself](https://github.com/amd/gaia/pull/8320) · <sub>merged</sub><br>
+  A recurring schedule whose runs fail now says so: `gaia schedule list` adds `failing=N`, and `gaia schedule show` prints how many runs in a row failed, when the latest did, its error, and the last run that succeeded.
 - [name GAIA&#x27;s chat model in the status line on a shared Lemonade](https://github.com/amd/gaia/pull/8224) · <sub>merged</sub><br>
   The TUI status line (`gaia-tui status`, the Local row in the model picker) now names the model GAIA chats with, not whichever model Lemonade loaded last, on a Lemonade shared with other apps.
 - [mark a goal stalled after 10 check-backs in a row](https://github.com/amd/gaia/pull/8223) · <sub>merged</sub><br>
@@ -165,10 +167,10 @@ It merged, then a later merge from another PR accidentally removed it along with
 - [x] First merged PR in a popular open-source project · [KanaDojo #33690](https://github.com/lingdojo/kana-dojo/pull/33690)
 - [x] First merged PR in a project with 10k+ stars · [Jenkins #27735](https://github.com/jenkinsci/jenkins/pull/27735)
 - [x] Caught a merge that wiped 5 KanaDojo themes and [opened the fix](https://github.com/lingdojo/kana-dojo/pull/33693)
-- [x] First merge at [AMD Gaia](https://github.com/amd/gaia) · 24 merged so far
+- [x] First merge at [AMD Gaia](https://github.com/amd/gaia) · 25 merged so far
 - [ ] First merge at [gosnmp](https://github.com/gosnmp/gosnmp) · 4 PRs in review
 - [ ] First merge at [Apache Airflow](https://github.com/apache/airflow) · [#77011](https://github.com/apache/airflow/pull/77011) in review
 - [ ] First merge at [MinIO JS](https://github.com/minio/minio-js) · [#1516](https://github.com/minio/minio-js/pull/1516) in review
-- [ ] 50 merged pull requests · 26 so far
+- [ ] 50 merged pull requests · 27 so far
 
-<sub>Numbers from the GitHub API, last updated 15 Nov 2026.</sub>
+<sub>Numbers from the GitHub API, last updated 16 Nov 2026.</sub>
