@@ -2,15 +2,15 @@
 
 Working professional, contributing to open source.
 
-`C++` `JavaScript` `Python` &nbsp;·&nbsp; 28 public repos &nbsp;·&nbsp; on GitHub since Jan 2022
+`C++` `JavaScript` `Python` &nbsp;·&nbsp; 29 public repos &nbsp;·&nbsp; on GitHub since Jan 2022
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 36 pull requests, 27 merged, 8 open, plus 6337 and minus 762 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 39 pull requests, 27 merged, 11 open, plus 6392 and minus 768 lines." width="100%">
 
 <sub>This page rebuilds itself from the GitHub API every day. [Make your own with orbit-profile](https://github.com/ityashag/orbit-profile).</sub>
 
-36 pull requests to 6 projects (Bug fixes 28 · Docs 3 · Other 1 · Security fixes 1 · Tests 1 · Cleanup 1 · Features 1). 27 of 27 code fixes shipped with tests.
+39 pull requests to 7 projects (Bug fixes 28 · Other 4 · Docs 3 · Security fixes 1 · Tests 1 · Cleanup 1 · Features 1). 27 of 27 code fixes shipped with tests.
 
 ### Where the work went
 
@@ -18,6 +18,7 @@ Working professional, contributing to open source.
 |:--|--:|--:|:--|
 | [AMD Gaia](https://github.com/amd/gaia) | 25 | 0 | Agent UI 4 · Agent UI backend 3 · Docs 3 · Agents and installs 2 · Command line 2 · +9 more |
 | [gosnmp](https://github.com/gosnmp/gosnmp) | 0 | 4 | SNMPv3 4 |
+| [prometheus/prometheus](https://github.com/prometheus/prometheus) | 0 | 3 | prompb 1 · storage 1 · tsdb 1 |
 | [KanaDojo](https://github.com/lingdojo/kana-dojo) | 1 | 1 | Community themes 3 |
 | [Jenkins](https://github.com/jenkinsci/jenkins) | 1 | 1 | Plugin manager 1 · Translations 1 |
 | [Apache Airflow](https://github.com/apache/airflow) | 0 | 1 | Configuration 1 |
@@ -36,7 +37,7 @@ Working professional, contributing to open source.
   When Launchpad&#x27;s API stops answering, the Linux CLI check now says so.
 
 <details>
-<summary>All 36 pull requests, each with what it does</summary>
+<summary>All 39 pull requests, each with what it does</summary>
 <br>
 
 **AMD Gaia** · 25
@@ -101,6 +102,13 @@ Working professional, contributing to open source.
   Once an SNMPv3 session knows its agent&#x27;s engine ID, a message from a different engine can no longer take the session over.
 - [take the incoming v3 security level from the received msgFlags](https://github.com/gosnmp/gosnmp/pull/650) · <sub>open</sub><br>
   An SNMPv3 reply is now checked at the security level its own flags declare, so an encrypted request no longer accepts an unencrypted answer.
+
+**prometheus/prometheus** · 3
+
+- [reject symbol refs of 1&lt;&lt;31 and above on 32-bit platforms](https://github.com/prometheus/prometheus/pull/20474) · <sub>open</sub><br>
+  None filed; found by reading the code and confirmed on linux/386.
+- [report chunk decoding errors in remote read](https://github.com/prometheus/prometheus/pull/20473) · <sub>open</sub>
+- [reject chunk data shorter than its header in FromData](https://github.com/prometheus/prometheus/pull/20472) · <sub>open</sub>
 
 **KanaDojo** · 3
 
@@ -169,8 +177,9 @@ It merged, then a later merge from another PR accidentally removed it along with
 - [x] Caught a merge that wiped 5 KanaDojo themes and [opened the fix](https://github.com/lingdojo/kana-dojo/pull/33693)
 - [x] First merge at [AMD Gaia](https://github.com/amd/gaia) · 25 merged so far
 - [ ] First merge at [gosnmp](https://github.com/gosnmp/gosnmp) · 4 PRs in review
+- [ ] First merge at [prometheus/prometheus](https://github.com/prometheus/prometheus) · 3 PRs in review
 - [ ] First merge at [Apache Airflow](https://github.com/apache/airflow) · [#77011](https://github.com/apache/airflow/pull/77011) in review
 - [ ] First merge at [MinIO JS](https://github.com/minio/minio-js) · [#1516](https://github.com/minio/minio-js/pull/1516) in review
 - [ ] 50 merged pull requests · 27 so far
 
-<sub>Numbers from the GitHub API, last updated 16 Nov 2026.</sub>
+<sub>Numbers from the GitHub API, last updated 17 Nov 2026.</sub>
