@@ -6,7 +6,7 @@ Working professional, contributing to open source.
 
 ## Receipts
 
-<img src="assets/receipt.svg" alt="Paper receipt floating in space: 40 pull requests, 27 merged, 12 open, plus 6972 and minus 811 lines." width="100%">
+<img src="assets/receipt.svg" alt="Paper receipt floating in space: 40 pull requests, 27 merged, 11 open, plus 7002 and minus 811 lines." width="100%">
 
 <sub>This page rebuilds itself from the GitHub API every day. [Make your own with orbit-profile](https://github.com/ityashag/orbit-profile).</sub>
 
@@ -19,7 +19,7 @@ Working professional, contributing to open source.
 | [AMD Gaia](https://github.com/amd/gaia) | 25 | 0 | Agent UI 4 · Agent UI backend 3 · Docs 3 · Agents and installs 2 · Command line 2 · +9 more |
 | [prometheus/prometheus](https://github.com/prometheus/prometheus) | 0 | 4 | prompb 2 · storage 1 · tsdb 1 |
 | [gosnmp](https://github.com/gosnmp/gosnmp) | 0 | 4 | SNMPv3 4 |
-| [KanaDojo](https://github.com/lingdojo/kana-dojo) | 1 | 1 | Community themes 3 |
+| [KanaDojo](https://github.com/lingdojo/kana-dojo) | 1 | 0 | Community themes 3 |
 | [Jenkins](https://github.com/jenkinsci/jenkins) | 1 | 1 | Plugin manager 1 · Translations 1 |
 | [Apache Airflow](https://github.com/apache/airflow) | 0 | 1 | Configuration 1 |
 | [MinIO JS](https://github.com/minio/minio-js) | 0 | 1 | AWS credentials 1 |
@@ -184,4 +184,4 @@ It merged, then a later merge from another PR accidentally removed it along with
 - [ ] First merge at [MinIO JS](https://github.com/minio/minio-js) · [#1516](https://github.com/minio/minio-js/pull/1516) in review
 - [ ] 50 merged pull requests · 27 so far
 
-<sub>Numbers from the GitHub API, last updated 22 Nov 2026.</sub>
+<sub>Numbers from the GitHub API, last updated 23 Nov 2026.</sub>
